@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
-		<artifactId>proxyrecorder</artifactId>
-		<groupId>no.api.proxyrecorder</groupId>
+		<artifactId>regurgitator</artifactId>
+		<groupId>no.api.regurgitator</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>proxyrecorder-service</artifactId>
+	<artifactId>regurgitator-service</artifactId>
 
 	<dependencies>
         <!--dependency>
@@ -81,7 +81,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>no.api.proxyrecorder.ProxyRecorderApplication</mainClass>
+                                    <mainClass>no.api.regurgitator.RegurgitatorApplication</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -111,10 +111,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>no.api.proxyrecorder.ProxyRecorderApplication</mainClass>
+                    <mainClass>no.api.regurgitator.RegurgitatorApplication</mainClass>
                     <arguments>
                         <argument>server</argument>
-                        <argument>../proxyrecorder-app/src/main/resources/etc/dropwizard.yml</argument>
+                        <argument>../regurgitator-app/src/main/resources/etc/dropwizard.yml</argument>
                     </arguments>
                 </configuration>
             </plugin>

@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<!--parent>
-		<groupId>no.api.maven-projects</groupId>
-		<artifactId>v3-super-pom</artifactId>
-		<version>2.167</version>
-	</parent-->
-
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>no.api.proxyrecorder</groupId>
-	<artifactId>proxyrecorder</artifactId>
+	<groupId>no.api.regurgitator</groupId>
+	<artifactId>regurgitator</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<scm>
-		<connection>scm:git:ssh://git@github.com/amedia/proxyrecorder.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/amedia/proxyrecorder.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/amedia/regurgitator.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/amedia/regurgitator.git</developerConnection>
   </scm>
 
     <distributionManagement>
@@ -74,8 +68,8 @@
                 <version>${junit.version}</version>
             </dependency>
 			<dependency>
-				<groupId>no.api.proxyrecorder</groupId>
-				<artifactId>proxyrecorder-service</artifactId>
+				<groupId>no.api.regurgitator</groupId>
+				<artifactId>regurgitator-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -214,8 +208,8 @@
     </build>
 
     <modules>
-      <module>proxyrecorder-service</module>
-      <module>proxyrecorder-app</module>
+      <module>regurgitator-service</module>
+      <module>regurgitator-app</module>
     </modules>
 
 </project>
