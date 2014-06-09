@@ -1,6 +1,5 @@
 package no.api.regurgitator.filters;
 
-import com.thoughtworks.xstream.XStream;
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpObject;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ProxyRegurgitatorFilter extends HttpFiltersAdapter {
     private static final Logger log = LoggerFactory.getLogger(ProxyRegurgitatorFilter.class);
-    private static XStream xstream = new XStream();
 
     private final ServerResponseStore storage;
 
