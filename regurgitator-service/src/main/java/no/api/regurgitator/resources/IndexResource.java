@@ -1,14 +1,14 @@
-package no.api.proxyrecorder.resources;
+package no.api.regurgitator.resources;
 
 /**
  *
  */
 
 import io.netty.handler.codec.http.HttpRequest;
-import no.api.proxyrecorder.filters.ProxyEaterFilter;
-import no.api.proxyrecorder.filters.ProxyRegurgitatorFilter;
-import no.api.proxyrecorder.storage.ServerResponseStore;
-import no.api.proxyrecorder.views.IndexView;
+import no.api.regurgitator.filters.ProxyEaterFilter;
+import no.api.regurgitator.filters.ProxyRegurgitatorFilter;
+import no.api.regurgitator.storage.ServerResponseStore;
+import no.api.regurgitator.views.IndexView;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
 import org.littleshoot.proxy.HttpProxyServer;

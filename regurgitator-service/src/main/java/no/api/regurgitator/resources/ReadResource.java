@@ -1,7 +1,7 @@
-package no.api.proxyrecorder.resources;
+package no.api.regurgitator.resources;
 
-import no.api.proxyrecorder.storage.ServerResponse;
-import no.api.proxyrecorder.storage.ServerResponseStore;
+import no.api.regurgitator.storage.ServerResponse;
+import no.api.regurgitator.storage.ServerResponseStore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;

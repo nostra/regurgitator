@@ -1,6 +1,6 @@
 # http://dropwizard.github.io/dropwizard/manual/configuration.html
 
-storageManager: no.api.proxyrecorder.storage.FeebleInMemoryStorage
+storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
 proxyPort: 9077
 
 #

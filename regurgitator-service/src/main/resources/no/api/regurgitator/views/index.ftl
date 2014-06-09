@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="no.api.proxyrecorder.views.IndexView" -->
+<#-- @ftlvariable name="" type="no.api.regurgitator.views.IndexView" -->
 <!DOCTYPE html>
 <html>
 <head>

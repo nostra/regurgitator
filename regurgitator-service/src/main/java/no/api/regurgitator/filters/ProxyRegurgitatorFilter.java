@@ -1,4 +1,4 @@
-package no.api.proxyrecorder.filters;
+package no.api.regurgitator.filters;
 
 import com.thoughtworks.xstream.XStream;
 import io.netty.buffer.ByteBuf;
@@ -7,8 +7,8 @@ import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import no.api.proxyrecorder.storage.ServerResponse;
-import no.api.proxyrecorder.storage.ServerResponseStore;
+import no.api.regurgitator.storage.ServerResponse;
+import no.api.regurgitator.storage.ServerResponseStore;
 import org.littleshoot.proxy.HttpFiltersAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

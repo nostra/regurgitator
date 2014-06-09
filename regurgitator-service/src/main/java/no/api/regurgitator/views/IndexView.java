@@ -1,7 +1,7 @@
-package no.api.proxyrecorder.views;
+package no.api.regurgitator.views;
 
 import io.dropwizard.views.View;
-import no.api.proxyrecorder.storage.ServerResponseStore;
+import no.api.regurgitator.storage.ServerResponseStore;
 
 import java.nio.charset.Charset;
 

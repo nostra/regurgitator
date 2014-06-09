@@ -1,4 +1,4 @@
-package no.api.proxyrecorder;
+package no.api.regurgitator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 /**
  *
  */
-public class ProxyRecorderConfiguration extends Configuration {
+public class RegurgitatorConfiguration extends Configuration {
     @Valid
     @NotNull
     @JsonProperty

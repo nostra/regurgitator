@@ -1,4 +1,4 @@
-package no.api.proxyrecorder.storage;
+package no.api.regurgitator.storage;
 
 import io.netty.handler.codec.http.HttpHeaders;
 

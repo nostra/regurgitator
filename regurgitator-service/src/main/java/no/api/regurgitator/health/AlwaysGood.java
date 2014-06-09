@@ -1,4 +1,4 @@
-package no.api.proxyrecorder.health;
+package no.api.regurgitator.health;
 
 import com.codahale.metrics.health.HealthCheck;
 

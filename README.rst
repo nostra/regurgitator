@@ -15,7 +15,7 @@ For desired changes, please make a **pull request**.
 Running the proxy
 ^^^^^^^^^^^^^^^^^
 
-Check out and compile with maven:
+You need Java-8 and Maven 3.x. Check out and compile with maven:
 
    mvn clean install
    rm -f rm *-service/target/original* 
