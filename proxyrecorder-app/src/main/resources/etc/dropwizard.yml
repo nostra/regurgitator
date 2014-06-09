@@ -1,0 +1,42 @@
+# http://dropwizard.github.io/dropwizard/manual/configuration.html
+
+storageManager: no.api.proxyrecorder.storage.FeebleInMemoryStorage
+proxyPort: 9077
+
+#
+# General configuration
+#
+server:
+  requestLog:
+    appenders:
+      - type: file
+        # A custom Logback format string.
+        logFormat: null
+        currentLogFilename: /var/log/app/regurgitator/request.logz
+        archive: true
+        archivedLogFilenamePattern: /var/log/app/regurgitator/request-%d.log.gz
+        archivedFileCount: 5
+
+  applicationConnectors:
+    - type: http
+      port: 9076
+  adminConnectors:
+    - type: http
+      port: 19076
+
+logging:
+  level: INFO
+  loggers:
+    no: INFO
+    no.api.proxyrecorder: DEBUG
+  # Settings for logging to stdout.
+  appenders:
+    - type: console
+      logFormat: '%d [%-5p] [%10.10t][%X{app}][%c][%M][%L] - %m%n'
+    - type: file
+      logFormat: '%d [%-5p] [%10.10t][%X{app}][%c][%M][%L] - %m%n'
+      currentLogFilename: /var/log/app/regurgitator/regurgitator.logz
+      archive: true
+      archivedLogFilenamePattern: /var/log/app/regurgitator/regurgitator-%d.log.gz
+      archivedFileCount: 5
+
