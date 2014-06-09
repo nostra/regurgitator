@@ -1,10 +1,14 @@
 The regurgitator
 ================
 
-Set up a proxy recorder in order to later spool of data
-during integration tests.
+Set up a proxy recorder in order to later spool off data. Useful for
+integration tests, and looking into your communication. 
 
-This app is based on 
+This application has been made in order to be able to create a static 
+data source for setting up tests with gemini: 
+https://github.com/bem/gemini
+
+The source code is based on 
 
 * http://www.dropwizard.io/
 * https://github.com/adamfisk/LittleProxy
@@ -48,14 +52,17 @@ The tools:
 * http://search.cpan.org/dist/libwww-perl/
 * http://httpie.org/ 
 
+You can also change your proxy setting in your favorite browser to
+use the regurgitator as proxy.
+
 Using java-setup
 ^^^^^^^^^^^^^^^^
 
 You need to add the following to your java command:: 
 
-    -Dhttp.proxyHost=localhost -Dhttp.proxyPort=9077
+    -Dhttp.proxyHost=localhost  -Dhttp.nonProxyHosts= -Dhttp.proxyPort=9077
 
 This can also be added to your MAVEN_OPTS, if you are running maven::
 
-   export MAVEN_OPTS="-Dhttp.proxyHost=localhost -Dhttp.proxyPort=9077 $MAVEN_OPTS"
+   export MAVEN_OPTS="-Dhttp.proxyHost=localhost -Dhttp.proxyPort=9077 -Dhttp.nonProxyHosts= $MAVEN_OPTS"
 
