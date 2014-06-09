@@ -9,6 +9,8 @@ This app is based on
 * http://www.dropwizard.io/
 * https://github.com/adamfisk/LittleProxy
 
+For desired changes, please make a **pull request**.
+
     
 Running the proxy
 ^^^^^^^^^^^^^^^^^
@@ -32,14 +34,12 @@ proxyPort       Where the proxy listens
 Testing the proxy
 ^^^^^^^^^^^^^^^^^
 
-Get the index page from somewhere using the proxy:
-
+Get the index page from somewhere using the proxy::
     
     GET -p http://localhost:9077 http://www.rb.no/
     http --proxy=http:http://localhost:9077 http://www.rb.no/ 
     
-You should be able to open
-  http://localhost:9076/
+You should be able to open http://localhost:9076/
 and find the request there.
     
 The tools:
