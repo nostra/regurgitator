@@ -28,7 +28,7 @@ logging:
   level: INFO
   loggers:
     no: INFO
-    no.api.proxyrecorder: DEBUG
+    no.api.regurgitator: DEBUG
   # Settings for logging to stdout.
   appenders:
     - type: console
