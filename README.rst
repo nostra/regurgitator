@@ -15,7 +15,7 @@ For desired changes, please make a **pull request**.
 Running the proxy
 ^^^^^^^^^^^^^^^^^
 
-You need Java-8 and Maven 3.x. Check out and compile with maven:
+You need Java-8 and Maven 3.x. Check out, compile with maven and run::
 
    mvn clean install
    rm -f rm *-service/target/original* 
@@ -23,6 +23,7 @@ You need Java-8 and Maven 3.x. Check out and compile with maven:
 
 The strange path to the dropwizard.yml file is due to amedia deployment defaults.
 The configuration is a standard dropwizard configuration.
+
 Configuration which is specific for the regurgitator is:
 
 ============== ======================================================================
