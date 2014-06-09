@@ -11,10 +11,6 @@
 	<artifactId>regurgitator-service</artifactId>
 
 	<dependencies>
-        <!--dependency>
-            <groupId>no.api.pantheon</groupId>
-            <artifactId>pantheon-core</artifactId>
-        </dependency-->
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -118,13 +114,15 @@
                     </arguments>
                 </configuration>
             </plugin>
-             <plugin>
+            <!--
+            <plugin>
                 <groupId>no.api.maven-plugins</groupId>
                 <artifactId>api-version-plugin</artifactId>
                 <configuration>
                     <forceCreation>true</forceCreation>
                 </configuration>
             </plugin>
+            -->
         </plugins>
     </build>
 
