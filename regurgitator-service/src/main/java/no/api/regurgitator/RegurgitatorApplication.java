@@ -9,6 +9,8 @@ import no.api.regurgitator.resources.IndexResource;
 import no.api.regurgitator.resources.ReadResource;
 import no.api.regurgitator.storage.ServerResponseStore;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  *
  */
@@ -28,9 +30,11 @@ public class RegurgitatorApplication extends Application<RegurgitatorConfigurati
     public void run(RegurgitatorConfiguration configuration, Environment environment) {
         ServerResponseStore storage = null;
         try {
-            storage = (ServerResponseStore) Class.forName(configuration.getStorageManager()).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new RuntimeException("Could not find configuration of storage manager.",e);
+            storage = (ServerResponseStore) Class.forName(configuration.getStorageManager())
+                    .getConstructor(RegurgitatorConfiguration.class)
+                    .newInstance(configuration);
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            throw new RuntimeException("Could not find configuration of storage manager or declaration of it is wrong.",e);
         }
         environment.healthChecks().register("dummy", new AlwaysGood());
         environment.jersey().register(new IndexResource(storage).startProxy( configuration.getProxyPort() ));

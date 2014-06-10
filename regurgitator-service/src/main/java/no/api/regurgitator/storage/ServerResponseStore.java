@@ -3,7 +3,8 @@ package no.api.regurgitator.storage;
 import java.util.List;
 
 /**
- *
+ * Notice that the constructor of the implementing class needs to
+ * take RegurgitatorConfiguration as a parameter
  */
 public interface ServerResponseStore {
 
