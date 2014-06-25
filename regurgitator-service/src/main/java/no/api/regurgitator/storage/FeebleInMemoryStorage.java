@@ -61,12 +61,12 @@ public class FeebleInMemoryStorage implements ServerResponseStore {
      * Just an indication of space
      */
     @Override
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 
     @Override
-    public int getSizeAsKb() {
-        return size / 1024;
+    public long getSizeAsKb() {
+        return size / 1024L;
     }
 }

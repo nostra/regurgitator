@@ -21,8 +21,8 @@
 
     <properties>
 		<!-- Notice that we want libraries to be in sync with the versions dropwizard use -->
-		<dropwizard.version>0.7.0</dropwizard.version>
-		<jackson.version>2.3.2</jackson.version>
+		<dropwizard.version>0.7.1</dropwizard.version>
+		<jackson.version>2.3.3</jackson.version>
 		<jetty.version>9.0.7.v20131107</jetty.version>
         <jersey.version>1.18.1</jersey.version>
 

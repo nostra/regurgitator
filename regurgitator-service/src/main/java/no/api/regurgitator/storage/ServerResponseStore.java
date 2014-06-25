@@ -26,10 +26,10 @@ public interface ServerResponseStore {
     /**
      * @return Size of stored elements in bytes.
      */
-    int getSize();
+    long getSize();
 
     /**
      * @return Size of elements in KBs. For the benefit of a GUI
      */
-    int getSizeAsKb();
+    long getSizeAsKb();
 }
