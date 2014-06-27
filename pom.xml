@@ -17,6 +17,12 @@
             <name>API Repository</name>
             <url>scpexe://maven.api.no/usr/local/maven/repository</url>
         </repository>
+
+        <snapshotRepository>
+          <id>snapshots</id>
+          <name>nexus Snapshot Repository</name>
+          <url>http://ci.dev.api.no/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <properties>
