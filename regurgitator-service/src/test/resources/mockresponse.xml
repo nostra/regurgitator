@@ -1,0 +1,142 @@
+<no.api.regurgitator.storage.ServerResponse>
+  <content>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;no.api.relax.core.beans.ApiPolldata&gt;
+  &lt;articleId&gt;7441831&lt;/articleId&gt;
+  &lt;votes&gt;
+    &lt;int&gt;111&lt;/int&gt;
+    &lt;int&gt;582&lt;/int&gt;
+    &lt;int&gt;13&lt;/int&gt;
+  &lt;/votes&gt;
+&lt;/no.api.relax.core.beans.ApiPolldata&gt;</content>
+  <status>200</status>
+  <headers class="io.netty.handler.codec.http.DefaultHttpHeaders">
+    <entries>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry>
+        <hash>100351</hash>
+        <key class="string">Age</key>
+        <value class="string">0</value>
+        <next>
+          <hash>1519121122</hash>
+          <key class="string">X-Varnish</key>
+          <value class="string">3151809932</value>
+          <next>
+            <hash>33832516</hash>
+            <key class="string">X-Trace-App</key>
+            <value class="string">[relax ; knuff.api.kunder.linpro.no ; Fri Jun 27 03:01:34 CEST 2014]</value>
+            <before>
+              <hash>934340323</hash>
+              <key class="string">Server</key>
+              <value class="string">Resin/3.0.24</value>
+              <before>
+                <hash>-1</hash>
+                <before>
+                  <hash>96590</hash>
+                  <key class="string">Via</key>
+                  <value class="string">1.1.192.168.50.139</value>
+                  <next>
+                    <hash>96590</hash>
+                    <key class="string">Via</key>
+                    <value class="string">1.1 varnish</value>
+                    <next>
+                      <hash>3123474</hash>
+                      <key class="string">Date</key>
+                      <value class="string">Fri, 27 Jun 2014 01:01:34 GMT</value>
+                      <before>
+                        <hash>1770192773</hash>
+                        <key class="string">Accept-Ranges</key>
+                        <value class="string">bytes</value>
+                        <before>
+                          <hash>2046947756</hash>
+                          <key class="string">X-Src-Webcache</key>
+                          <value class="string">textur.api.kunder.linpro.no</value>
+                          <before>
+                            <hash>842982106</hash>
+                            <key class="string">x-channel-maxage</key>
+                            <value class="string">205</value>
+                            <before>
+                              <hash>817908814</hash>
+                              <key class="string">Content-Type</key>
+                              <value class="string">application/xml;charset=ISO-8859-1</value>
+                              <before>
+                                <hash>2080997394</hash>
+                                <key class="string">Cache-Control</key>
+                                <value class="string">max-age=30, channel=&quot;http://localhost:9006/atomizer/event/current&quot;, channel-maxage=205, group=&quot;/relax-knuff&quot;, group=&quot;/pub41&quot;, group=&quot;/art7441831&quot;</value>
+                                <before reference="../../../../../../../../../../.."/>
+                                <after reference="../.."/>
+                                <outer-class reference="../../../../../../../../../../../../../../.."/>
+                              </before>
+                              <after reference="../.."/>
+                              <outer-class reference="../../../../../../../../../../../../../.."/>
+                            </before>
+                            <after reference="../.."/>
+                            <outer-class reference="../../../../../../../../../../../../.."/>
+                          </before>
+                          <after reference="../.."/>
+                          <outer-class reference="../../../../../../../../../../../.."/>
+                        </before>
+                        <after reference="../.."/>
+                        <outer-class reference="../../../../../../../../../../.."/>
+                      </before>
+                      <after reference="../../../../../../.."/>
+                      <outer-class reference="../../../../../../../../../.."/>
+                    </next>
+                    <before>
+                      <hash>764271226</hash>
+                      <key class="string">Content-Length</key>
+                      <value class="string">230</value>
+                      <before>
+                        <hash>2072041691</hash>
+                        <key class="string">X-Trace-Cache</key>
+                        <value class="string">[varnish-v3local ; textur.api.kunder.linpro.no ; Fri, 27 Jun 2014 01:01:34 GMT ; 205.000 orig-ttl ; 0 orig-Age]</value>
+                        <before reference="../../../../../../../../.."/>
+                        <after reference="../.."/>
+                        <outer-class reference="../../../../../../../../../../.."/>
+                      </before>
+                      <after reference="../.."/>
+                      <outer-class reference="../../../../../../../../../.."/>
+                    </before>
+                    <after reference="../.."/>
+                    <outer-class reference="../../../../../../../../.."/>
+                  </next>
+                  <before reference="../next"/>
+                  <after reference="../.."/>
+                  <outer-class reference="../../../../../../../.."/>
+                </before>
+                <after reference="../.."/>
+                <outer-class reference="../../../../../../.."/>
+              </before>
+              <after reference="../.."/>
+              <outer-class reference="../../../../../.."/>
+            </before>
+            <after reference="../before/before/before/next/next/before/before/before/before/before"/>
+            <outer-class reference="../../../../.."/>
+          </next>
+          <before reference="../next/before/before/before/next/next"/>
+          <after reference="../.."/>
+          <outer-class reference="../../../.."/>
+        </next>
+        <before reference="../next"/>
+        <after reference="../next/next/before/before/before/next/before/before"/>
+        <outer-class reference="../../.."/>
+      </io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry>
+      <null/>
+      <null/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before/next/next/before/before/before/before"/>
+      <null/>
+      <null/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before/next/before/before"/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before/next/next/before/before/before/before/before"/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before"/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before/next/next/before/before"/>
+      <null/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before/next/next/before"/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before/next/next/before/before/before"/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before"/>
+      <null/>
+      <null/>
+      <io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry reference="../io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before/before/next/before"/>
+    </entries>
+    <head reference="../entries/io.netty.handler.codec.http.DefaultHttpHeaders_-HeaderEntry/next/next/before/before"/>
+    <validate>true</validate>
+  </headers>
+</no.api.regurgitator.storage.ServerResponse>
