@@ -8,6 +8,7 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import no.api.regurgitator.storage.ServerResponse;
 import no.api.regurgitator.storage.ServerResponseStore;
+import no.api.regurgitator.storage.key.FilePathKey;
 import org.littleshoot.proxy.HttpFiltersAdapter;
 import org.littleshoot.proxy.impl.ProxyUtils;
 import org.slf4j.Logger;
@@ -61,7 +62,9 @@ public class ProxyEaterFilter extends HttpFiltersAdapter {
      * Creating storage key
      */
     public static String createKey(HttpRequest source) {
-        return source.getMethod()+"_"+ source.getUri();
+        String originalKey = source.getMethod()+"_"+ source.getUri();
+        FilePathKey key = new FilePathKey(originalKey);
+        return key.getFullPath();
     }
 
 }
