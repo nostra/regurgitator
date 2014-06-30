@@ -1,9 +1,6 @@
 package no.api.regurgitator.storage;
 
 import com.thoughtworks.xstream.XStream;
-import no.api.regurgitator.RegurgitatorConfiguration;
-import no.api.regurgitator.storage.key.EasyKey;
-import no.api.regurgitator.storage.key.Key;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -26,123 +23,127 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
     private static final Logger log = LoggerFactory.getLogger(SaveInHardDiskStorage.class);
 
     private static final XStream xstream = new XStream();
+
     private String saveDir = "Save/";
 
-    int size = 0;
+    private int size = -1;
 
-    public SaveInHardDiskStorage(RegurgitatorConfiguration conf ) {
-        //TO DO load savedir from config
-        String saveConfig =  conf.getArchivedFolder();
-        if(!StringUtils.isEmpty(saveConfig) && saveConfig.endsWith("/")) {
-            saveDir = saveConfig;
-        }else{
-            log.warn("Bad name or missing. Switch to default archived folder name.");
-            saveDir = "Save/";
+    public String getSaveDir(){
+        return saveDir;
+    }
+
+    public void setSaveDir(String targetDir){
+        saveDir = targetDir;
+    }
+
+    public void updateSize() {
+        log.debug("Update Size Start ...");
+
+        Queue<File> dirs = new LinkedList<>();
+        dirs.add(new File(saveDir));
+        size = 0;
+        while ( ! dirs.isEmpty() ) {
+            File[] listFiles = dirs.poll().listFiles();
+            if ( listFiles == null ) {
+                break;
+            }
+            subLoopUpdateSize(dirs,listFiles);
+
         }
+        log.debug("Update Size Stop !!");
+    }
 
-        //updating size
-        this.listAllTargetFile(saveDir);
+    private void subLoopUpdateSize(Queue<File> dirs,File[] allFile){
+        for ( File f : allFile ) {
+            if ( f.isDirectory() ) {
+                dirs.add(f);
+            } else if ( f.isFile() ) {
+                size += f.length();
+            }
+        }
     }
 
     @Override
     public void store(String key, ServerResponse page) {
-
-        Key singleKey = new EasyKey(key);
-
-        try {
-            store(singleKey,xstream.toXML(page));
-        }catch (IOException e){
-            //TO DO Handle IOException
-            log.error(e.toString());
-        }
+        store(key, xstream.toXML(page));
     }
 
-    private void store(Key key,String content) throws IOException{
-
-        if(key == null || content == null) {
-            log.debug("reject key :" + key.getKey());
+    private void store(String key, String content) {
+        if ( key == null || content == null ) {
+            log.debug("reject key :" + key);
             return;
         }
 
-        saveContentWithKey(key, content);
+        // try to load old content
+        String loadOldContent = loadContentWithKey(key);
+
+        if ( saveContentWithKey(key, content) ) {
+
+            //Update size
+            if ( ! StringUtils.isEmpty(loadOldContent) ) {
+                size -= loadOldContent.length();
+            }
+            size += content.length();
+        }
     }
 
-    private boolean saveContentWithKey(Key key,String content){
+    private boolean saveContentWithKey(String key, String content) {
         try {
-            File file = new File(saveDir + key.getFullPath());
-            log.debug("save: " +saveDir + key.getFullPath());
+            File file = new File(saveDir + key);
+            log.debug("save: " + saveDir + key);
             FileUtils.writeStringToFile(file, content);
-
-            //To Do Fix this later
-
-            File keyFile = new File(saveDir + key.getPath() + "/data.key");
-            FileUtils.writeStringToFile(keyFile,key.getKey());
-
             return true;
-        }catch (IOException e) {
-            //TO DO Handle Alert
-            log.error("save fail: [" +key.getKey() +"] " + e.toString());
+        } catch (IOException e) {
+            log.error("Save fail [" + key + "] ", e);
             return false;
         }
     }
 
-    private String loadContentWithKey(Key key){
+    private String loadContentWithKey(String key) {
         try {
-            log.debug("load data :" + saveDir + key.getFullPath());
-            return IOUtils.toString(new FileInputStream(new File(saveDir + key.getFullPath())));
-        }catch (IOException e) {
-            //TO DO Handle Alert
+            log.debug("load data :" + saveDir + key);
+            return IOUtils.toString(new FileInputStream(new File(saveDir + key)));
+        } catch (IOException e) {
+            log.error("Cannot read [" +  key + "]", e);
             return null;
         }
     }
 
-    private String readKeyFile(File key){
-        try {
-            return IOUtils.toString(new FileInputStream(key));
-        }catch (IOException e) {
-            //TO DO Handle Alert
-            return null;
-        }
-    }
-
-    public List<String> listAllTargetFile(String startDir){
+    public List<String> listAllTargetFile() {
         List<String> allKeys = new ArrayList<>();
         Queue<File> dirs = new LinkedList<>();
-        dirs.add(new File(startDir));
-        size = 0;
+        dirs.add(new File(saveDir));
 
-        while (!dirs.isEmpty()) {
+        while ( ! dirs.isEmpty() ) {
             File[] listFiles = dirs.poll().listFiles();
-            if(listFiles != null) {
-                for (File f : listFiles) {
+            if (listFiles == null) {
+                break;
+            }
 
-                    if (f.isDirectory()) {
-                        dirs.add(f);
-                    } else if (f.isFile()) {
-                        if(f.getName().equals("data.key")) {
-                            // Temp Solution
-                            String key = readKeyFile(f);
-                            if (key != null)
-                                allKeys.add(key);
-                        }else if(f.getName().equals("save.xml")){
-                            // Update Sized
-                            size += f.length();
-                        }
-                    }
-                }
+            subLoopListAllTargetFile(dirs, allKeys, listFiles);
+        }
+
+        return allKeys;
+    }
+
+    private void subLoopListAllTargetFile(Queue<File> dirs,List<String> allKeys,File[] allFile){
+        for ( File f : allFile ) {
+            if ( f.isDirectory() ) {
+                dirs.add(f);
+            } else if ( f.isFile() ) {
+                String key = f.getPath().replace(saveDir, "");
+                allKeys.add(key);
             }
         }
-        return allKeys;
     }
 
     @Override
     public ServerResponse read(String key) {
-        Key singleKey = new EasyKey(key);
-        String content = loadContentWithKey(singleKey);
-        if(content != null) {
+        String content;
+        content = loadContentWithKey(key);
+        if ( content != null ) {
             return (ServerResponse) xstream.fromXML(content);
-        }else{
-
+        } else {
             return null;
         }
     }
@@ -150,16 +151,22 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     @Override
     public List<String> getKeys() {
-        return listAllTargetFile(saveDir);
+        return listAllTargetFile();
     }
 
     @Override
     public long getSize() {
+        if ( size < 0 ) {
+            updateSize();
+        }
         return size;
     }
 
     @Override
-    public long getSizeAsKb() {
+    public long getSizeAsKb(){
+        if ( size < 0 ) {
+            updateSize();
+        }
         return size / 1024L;
     }
 

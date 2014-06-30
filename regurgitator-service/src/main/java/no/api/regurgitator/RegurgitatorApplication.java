@@ -7,6 +7,7 @@ import io.dropwizard.views.ViewBundle;
 import no.api.regurgitator.health.AlwaysGood;
 import no.api.regurgitator.resources.IndexResource;
 import no.api.regurgitator.resources.ReadResource;
+import no.api.regurgitator.storage.SaveInHardDiskStorageFactory;
 import no.api.regurgitator.storage.ServerResponseStore;
 
 import java.lang.reflect.InvocationTargetException;
@@ -30,14 +31,21 @@ public class RegurgitatorApplication extends Application<RegurgitatorConfigurati
     public void run(RegurgitatorConfiguration configuration, Environment environment) {
         ServerResponseStore storage = null;
         try {
-            storage = (ServerResponseStore) Class.forName(configuration.getStorageManager())
-                    .getConstructor(RegurgitatorConfiguration.class)
-                    .newInstance(configuration);
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new RuntimeException("Could not find configuration of storage manager or declaration of it is wrong.",e);
+            String storageManagerClassName = configuration.getStorageManager();
+            if ( storageManagerClassName.equals("no.api.regurgitator.storage.SaveInHardDiskStorage") ) {
+                storage = SaveInHardDiskStorageFactory.createStorage(configuration);
+            } else {
+                storage = (ServerResponseStore) Class.forName(storageManagerClassName)
+                        .getConstructor(RegurgitatorConfiguration.class)
+                        .newInstance(configuration);
+            }
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException
+                | ClassNotFoundException e) {
+            throw new RuntimeException("Could not find configuration of storage manager or declaration of it is wrong.",
+                    e);
         }
         environment.healthChecks().register("dummy", new AlwaysGood());
-        environment.jersey().register(new IndexResource(storage).startProxy( configuration.getProxyPort() ));
+        environment.jersey().register(new IndexResource(storage).startProxy(configuration.getProxyPort()));
         environment.jersey().register(new ReadResource(storage));
     }
 }
