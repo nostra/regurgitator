@@ -47,7 +47,7 @@ public class SaveInHardDiskStorageTest {
 
     @Test
     public void testSaveInHardDiskStorageTest() throws IOException {
-        ServerResponseStore storage = SaveInHardDiskStorageFactory.createStorage(RULE.getConfiguration());
+        ServerResponseStore storage = new SaveInHardDiskStorage(RULE.getConfiguration());
         String mockKey = "GET_http://relax.v3.api.no/relax-1.6/polldata/41/7441831";
 
         //mock test response

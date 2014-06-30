@@ -28,7 +28,7 @@ public class SaveInHardDiskStorageFactoryTest {
 
     @Test
     public void testCreateStorage(){
-        SaveInHardDiskStorage storage = SaveInHardDiskStorageFactory.createStorage(RULE.getConfiguration());
+        SaveInHardDiskStorage storage = new SaveInHardDiskStorage(RULE.getConfiguration());
         Assert.assertNotNull(storage);
         Assert.assertEquals("mocktemp/",storage.getSaveDir());
     }

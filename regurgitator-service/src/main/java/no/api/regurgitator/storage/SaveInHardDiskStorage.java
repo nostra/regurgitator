@@ -1,6 +1,7 @@
 package no.api.regurgitator.storage;
 
 import com.thoughtworks.xstream.XStream;
+import no.api.regurgitator.RegurgitatorConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -28,33 +29,32 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     private int size = -1;
 
+    public SaveInHardDiskStorage( RegurgitatorConfiguration conf ) {
+        String archivedFolder = conf.getArchivedFolder();
+        if (!archivedFolder.isEmpty() && archivedFolder.endsWith("/")) {
+            saveDir = archivedFolder;
+        }
+    }
+
     public String getSaveDir() {
         return saveDir;
     }
 
-    public void setSaveDir(String targetDir) {
-        saveDir = targetDir;
-    }
-
     public void updateSize() {
-        log.debug("Update Size Start ...");
-
         Queue<File> dirs = new LinkedList<>();
         dirs.add(new File(saveDir));
         size = 0;
         while (!dirs.isEmpty()) {
             File[] listFiles = dirs.poll().listFiles();
-            if (listFiles == null) {
-                break;
-            }
             subLoopUpdateSize(dirs, listFiles);
-
         }
-        log.debug("Update Size Stop !!");
     }
 
-    private void subLoopUpdateSize(Queue<File> dirs, File[] allFile) {
-        for (File f : allFile) {
+    private void subLoopUpdateSize(Queue<File> dirs, File[] allFiles) {
+        if ( allFiles == null ) {
+            return;
+        }
+        for (File f : allFiles) {
             if (f.isDirectory()) {
                 dirs.add(f);
             } else if (f.isFile()) {
@@ -116,9 +116,6 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
         while (!dirs.isEmpty()) {
             File[] listFiles = dirs.poll().listFiles();
-            if (listFiles == null) {
-                break;
-            }
 
             subLoopListAllTargetFile(dirs, allKeys, listFiles);
         }
@@ -126,8 +123,11 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
         return allKeys;
     }
 
-    private void subLoopListAllTargetFile(Queue<File> dirs, List<String> allKeys, File[] allFile) {
-        for (File f : allFile) {
+    private void subLoopListAllTargetFile(Queue<File> dirs, List<String> allKeys, File[] allFiles) {
+        if ( allFiles == null ) {
+            return;
+        }
+        for (File f : allFiles) {
             if (f.isDirectory()) {
                 dirs.add(f);
             } else if (f.isFile()) {
@@ -139,8 +139,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     @Override
     public ServerResponse read(String key) {
-        String content;
-        content = loadContentWithKey(key);
+        String content = loadContentWithKey(key);
         if (content != null) {
             return (ServerResponse) xstream.fromXML(content);
         } else {
@@ -164,10 +163,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     @Override
     public long getSizeAsKb() {
-        if (size < 0) {
-            updateSize();
-        }
-        return size / 1024L;
+        return getSize() / 1024L;
     }
 
 }

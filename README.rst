@@ -32,9 +32,12 @@ Configuration which is specific for the regurgitator is:
 
 ============== ======================================================================
 storageManager  Class name of something which implements ServerResponseStore
-                Defaults to feeble inmemory storage.
+                Defaults to feeble in-memory storage.
 proxyPort       Where the proxy listens
 ============== ======================================================================
+
+Notice that you at the time of writing has a storage choice of file storage and
+in-memory storage.
 
 Testing the proxy
 ^^^^^^^^^^^^^^^^^

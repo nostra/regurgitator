@@ -27,8 +27,6 @@ public class ProxyRegurgitatorFilter extends HttpFiltersAdapter {
 
     @Override
     public HttpResponse requestPre(HttpObject httpObject) {
-        //log.debug("-----"+new String( dfh.content().array()) );
-        // TODO Would probably be able to cache different response status'. But - 200 OK is the most important
         DefaultFullHttpResponse response =
                 new DefaultFullHttpResponse(originalRequest.getProtocolVersion(), HttpResponseStatus.OK);
         ByteBuf content = response.content();
