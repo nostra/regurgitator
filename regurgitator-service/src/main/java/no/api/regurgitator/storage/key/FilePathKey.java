@@ -32,9 +32,7 @@ public class FilePathKey {
         return this.original_key;
     }
 
-
     private void createKey(String key) {
-
         String[] partKeys = key.split("_", 2);
         String method = partKeys[0];
         String requestURI = partKeys[1];
