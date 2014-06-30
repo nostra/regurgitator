@@ -28,11 +28,11 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     private int size = -1;
 
-    public String getSaveDir(){
+    public String getSaveDir() {
         return saveDir;
     }
 
-    public void setSaveDir(String targetDir){
+    public void setSaveDir(String targetDir) {
         saveDir = targetDir;
     }
 
@@ -42,22 +42,22 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
         Queue<File> dirs = new LinkedList<>();
         dirs.add(new File(saveDir));
         size = 0;
-        while ( ! dirs.isEmpty() ) {
+        while (!dirs.isEmpty()) {
             File[] listFiles = dirs.poll().listFiles();
-            if ( listFiles == null ) {
+            if (listFiles == null) {
                 break;
             }
-            subLoopUpdateSize(dirs,listFiles);
+            subLoopUpdateSize(dirs, listFiles);
 
         }
         log.debug("Update Size Stop !!");
     }
 
-    private void subLoopUpdateSize(Queue<File> dirs,File[] allFile){
-        for ( File f : allFile ) {
-            if ( f.isDirectory() ) {
+    private void subLoopUpdateSize(Queue<File> dirs, File[] allFile) {
+        for (File f : allFile) {
+            if (f.isDirectory()) {
                 dirs.add(f);
-            } else if ( f.isFile() ) {
+            } else if (f.isFile()) {
                 size += f.length();
             }
         }
@@ -69,7 +69,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
     }
 
     private void store(String key, String content) {
-        if ( key == null || content == null ) {
+        if (key == null || content == null) {
             log.debug("reject key :" + key);
             return;
         }
@@ -77,10 +77,10 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
         // try to load old content
         String loadOldContent = loadContentWithKey(key);
 
-        if ( saveContentWithKey(key, content) ) {
+        if (saveContentWithKey(key, content)) {
 
             //Update size
-            if ( ! StringUtils.isEmpty(loadOldContent) ) {
+            if (!StringUtils.isEmpty(loadOldContent)) {
                 size -= loadOldContent.length();
             }
             size += content.length();
@@ -104,7 +104,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
             log.debug("load data :" + saveDir + key);
             return IOUtils.toString(new FileInputStream(new File(saveDir + key)));
         } catch (IOException e) {
-            log.error("Cannot read [" +  key + "]", e);
+            log.error("Cannot read [" + key + "]", e);
             return null;
         }
     }
@@ -114,7 +114,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
         Queue<File> dirs = new LinkedList<>();
         dirs.add(new File(saveDir));
 
-        while ( ! dirs.isEmpty() ) {
+        while (!dirs.isEmpty()) {
             File[] listFiles = dirs.poll().listFiles();
             if (listFiles == null) {
                 break;
@@ -126,11 +126,11 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
         return allKeys;
     }
 
-    private void subLoopListAllTargetFile(Queue<File> dirs,List<String> allKeys,File[] allFile){
-        for ( File f : allFile ) {
-            if ( f.isDirectory() ) {
+    private void subLoopListAllTargetFile(Queue<File> dirs, List<String> allKeys, File[] allFile) {
+        for (File f : allFile) {
+            if (f.isDirectory()) {
                 dirs.add(f);
-            } else if ( f.isFile() ) {
+            } else if (f.isFile()) {
                 String key = f.getPath().replace(saveDir, "");
                 allKeys.add(key);
             }
@@ -141,7 +141,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
     public ServerResponse read(String key) {
         String content;
         content = loadContentWithKey(key);
-        if ( content != null ) {
+        if (content != null) {
             return (ServerResponse) xstream.fromXML(content);
         } else {
             return null;
@@ -156,15 +156,15 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     @Override
     public long getSize() {
-        if ( size < 0 ) {
+        if (size < 0) {
             updateSize();
         }
         return size;
     }
 
     @Override
-    public long getSizeAsKb(){
-        if ( size < 0 ) {
+    public long getSizeAsKb() {
+        if (size < 0) {
             updateSize();
         }
         return size / 1024L;

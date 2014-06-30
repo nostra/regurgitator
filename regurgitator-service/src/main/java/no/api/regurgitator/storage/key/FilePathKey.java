@@ -45,7 +45,7 @@ public class FilePathKey {
         String convertURI = this.customReplaceString(requestURI, '_');
         String[] subPaths = StringUtils.split(convertURI, "_");
 
-        for ( String eachPaths : subPaths ) {
+        for (String eachPaths : subPaths) {
             pathList.add(convertLinuxName(eachPaths));
         }
 
@@ -55,9 +55,9 @@ public class FilePathKey {
 
     private String customReplaceString(String target, char replace) {
         StringBuilder tempString = new StringBuilder();
-        for ( char singleChar : target.toCharArray() ) {
+        for (char singleChar : target.toCharArray()) {
 
-            if ( Character.isAlphabetic(singleChar) || Character.isDigit(singleChar) ) {
+            if (Character.isAlphabetic(singleChar) || Character.isDigit(singleChar)) {
                 tempString.append(singleChar);
             } else {
                 tempString.append(replace);
@@ -69,7 +69,7 @@ public class FilePathKey {
 
 
     private String convertLinuxName(String s) {
-        if ( StringUtils.isEmpty(s) ) {
+        if (StringUtils.isEmpty(s)) {
             return "null";
         } else {
             return s;
