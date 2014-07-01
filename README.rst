@@ -69,3 +69,10 @@ This can also be added to your MAVEN_OPTS, if you are running maven::
 
    export MAVEN_OPTS="-Dhttp.proxyHost=localhost -Dhttp.proxyPort=9077 -Dhttp.nonProxyHosts= $MAVEN_OPTS"
 
+Future directions
+^^^^^^^^^^^^^^^^^
+
+* Support "cache mode". Fetch it if it is not already present
+* Paging in the key list
+* Invalidation of content
+* Searching for key / content
