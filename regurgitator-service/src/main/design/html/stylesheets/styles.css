@@ -1,0 +1,132 @@
+.green-button {
+    width: 50px;
+    background-color: #5eb8ae;
+    shadow: 5;
+    shadow-color: #404040;
+    font-family:'Oswald stencil';
+    font-size: 14px;
+    position: absolute;/*middle + center of box  ????*/
+}
+
+body {
+  font-family:'Oswald stencil'
+}
+
+#circle-red-symbol {
+    width: 10px;
+    height: 10px;
+    radius: 10px;
+    shadow: 2;
+    shadow-color: #404040;
+    position: absolute;/*middle of text */
+    right: 10px;
+    background-color: #b33d21;
+    border-radius: 50px;
+}
+
+#circle-gray-symbol {
+    width: 10px;
+    height: 10px;
+    radius: 10px;
+    position: absolute;/*middle of text */
+    right: 10px;
+    background-color: #888888;
+    border-radius: 50px;
+}
+
+/* header */
+.header-regur {
+    /*.head*/
+    background: #ffffff; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZGVkZWMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #ededec 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededec)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#ededec 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#ededec 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#ededec 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#ededec 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededec',GradientType=0 ); /* IE6-8 */
+    height: 50px;
+    width: 100%;
+    position: relative;
+    height: 50px;
+    width: 100%;
+    /*end .head*/
+    background: #3b3b3b;
+    border: 2px;
+    color: #a09b87;
+}
+
+/* eg. RECORD PROXY */
+.top-right-text {
+    font-family:'Oswald stencil';
+    font-size: 18px;
+    font-color: #efecdb;    
+    top: 15px;
+    bottom: 15px;
+    right: 10px;
+}
+
+.green-button {
+    width: 50px;
+    background-color: #5eb8ae;
+    shadow: 5;
+    shadow-color: #404040;
+    font-family:'Oswald stencil';
+    font-size: 14px;
+    position: absolute;/*middle + center of box  ????*/
+}
+
+.red-button {
+    width: 50px;
+    background-color: #b13a22;
+    shadow: 5;
+    shadow-color: #404040;
+    font-family:'Oswald stencil';
+    font-size: 14px;
+    position: absolute;/*middle + center of box  ????*/
+}
+
+.gray-button {
+    width: 50px;
+    background-color: #888888;
+    font-family:'Oswald stencil';
+    font-size: 14px;
+    position: absolute;/*middle + center of box  ????*/
+    font-size: 14px;
+    position: absolute;/*middle + center of box  ????*/
+}
+
+/* body */
+/* eg. USED SIZE:90000KB */
+.top-right-body{
+    font-family:'Oswald stencil';
+    font-size: 14px;
+    font-color: #76442b;
+    top: 15px;
+    bottom: 15px;
+    text-align:right;
+}
+
+.container-list {
+    background: #efecdb;
+    font-family: monaco;
+    font-size: 12px;
+    font-color: #2d5f54
+    /*text-align:left;*/
+    padding: 20px;
+    width:100%;
+    height:800px;
+    overflow:scroll;/*scrollbar: xaxis and yaxis;*/
+}
+
+/* footer */
+/* eg. MODIFIED BY AMEDIA */
+.footer {
+    font-family:'Oswald stencil';
+    font-size: 12px;
+    font-color: #3a3a3a;
+    bottom: 15px;
+    text-align:center;
+}
