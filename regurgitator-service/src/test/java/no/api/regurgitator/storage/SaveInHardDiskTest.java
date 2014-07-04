@@ -5,7 +5,7 @@ import no.api.regurgitator.RegurgitatorApplication;
 import no.api.regurgitator.RegurgitatorConfiguration;
 import no.api.regurgitator.storage.template.ServerResponseStoreTestCase;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.ClassRule;
 
 import java.io.File;
@@ -31,8 +31,8 @@ public class SaveInHardDiskTest extends ServerResponseStoreTestCase {
         return false;
     }
 
-    @After
-    public void cleanUp() throws IOException {
+    @AfterClass
+    public static void cleanUp() throws IOException {
         FileUtils.deleteDirectory(new File("mocktemp"));
     }
 }
