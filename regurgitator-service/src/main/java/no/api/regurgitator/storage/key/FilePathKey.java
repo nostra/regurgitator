@@ -14,7 +14,8 @@ public class FilePathKey {
 
     private String filePath;
 
-    private String original_key;
+    //Fixed sonar
+    private String originalKey;
 
     public String getFullPath() {
         return this.filePath + "/" + this.fileName;
@@ -29,14 +30,14 @@ public class FilePathKey {
     }
 
     public String getKey() {
-        return this.original_key;
+        return this.originalKey;
     }
 
     private void createKey(String key) {
         String[] partKeys = key.split("_", 2);
         String method = partKeys[0];
         String requestURI = partKeys[1];
-        this.original_key = key;
+        this.originalKey = key;
         this.fileName = "save.xml";
         List<String> pathList = new ArrayList<>();
 
