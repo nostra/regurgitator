@@ -38,7 +38,7 @@ public class RegurgitatorApplication extends Application<RegurgitatorConfigurati
                     e);
         }
         environment.healthChecks().register("dummy", new AlwaysGood());
-        environment.jersey().register(new IndexResource(storage).startProxy( configuration.getProxyPort()) );
+        environment.jersey().register(new IndexResource(storage, configuration.getRecordOnStart()).startProxy( configuration.getProxyPort()) );
         environment.jersey().register(new ReadResource(storage));
     }
 }

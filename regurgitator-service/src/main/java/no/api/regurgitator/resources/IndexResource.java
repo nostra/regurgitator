@@ -33,10 +33,10 @@ public class IndexResource {
     private Boolean toRecord = Boolean.TRUE;
     private ServerResponseStore storage;
 
-    public IndexResource(ServerResponseStore storage) {
+    public IndexResource(ServerResponseStore storage, Boolean toRecord) {
         this.storage = storage;
+        this.toRecord = toRecord;
     }
-
 
     @GET
     public IndexView getIndex(@Context HttpServletRequest req) {
@@ -53,8 +53,6 @@ public class IndexResource {
 
         return new IndexView(toRecord, storage);
     }
-
-
 
     public Object startProxy(final int proxyPort) {
         server =
