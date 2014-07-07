@@ -1,5 +1,5 @@
 body {
-    font-family:'Oswald stencil';
+    font-family: 'Oswald', sans-serif;
     background-color:#e5dec2;
     height: auto;
 }
@@ -21,103 +21,50 @@ a{
     color: darkgreen;
 }
 
-.header-container {
-    height: 50px;
-    width: 100%;
-    position: relative;
-    background: #3b3b3b;
-    border: 2px;
-    border-bottom:thick solid #a09b87;
-    text-align: right;
+#header{
+	height: 50px;
+	width: 100%;
 }
 
-.header-container-inner{
-    text-align: right;
-    padding: 15px 0;
-    width: 95%;
+#header-wrapper {
+   	padding: 0 80px;
+   	background: #3b3b3b;
+	border-bottom:2px solid #a09b87;
+	position:relative;
 }
 
-.header-wrapper {
-    min-height: 82px;
+#header-wrapper img {
+    position:absolute;
 }
 
-.header-wrapper img {
-    display: block;
-    float: left;
-    position: relative;
-    z-index: 5;
+#header-container-inner{
+    float: right;
+    padding: 11px 0;  
 }
 
-.content-container {
-    width: 100%;
-    position: absolute;
-    background: #e5dec2;
-}
-
-.content-container-inner {
-    width: 95%;
-    position: relative;
-    margin: auto;
-    border: 2px;
-}
-
-/* "USED SIZE:90000 KB" */
-.content-top {
-    height: 50px;
-    top: 15px;
-    bottom: 15px;
-    width: 100%;
-    position: relative;
-    right: 0;
-    font-size: 14px;
-    text-align: right;
-}
-
-/*List*/
-.content-bottom {
-    height: 700px;
-    width: 95%;
-    position: relative;
-    background: #efecdb;
-    font-family: monaco;
-    font-size:12px;
-    font-color: #2d5f54;
-    overflow:scroll;
-    padding: 20px;
-    margin: 0 auto;
-}
-
-#circle-red-symbol {
-    width: 10px;
+.circleSymbol
+{
+	width: 10px;
     height: 10px;
     radius: 10px;
     shadow: 2;
     shadow-color: #404040;
-    right: 10px;
-    background-color: #b33d21;
-    border-radius: 50px;
-    display: inline-block;
-}
-
-#circle-gray-symbol {
-    width: 10px;
-    height: 10px;
-    radius: 10px;
-    right: 10px;
+    margin-right: 10px;
+    margin-top:9px;
     background-color: #888888;
     border-radius: 50px;
-    display: inline-block;
+    float:left;
+}
+.circleSymbol.active{	
+	 background-color: #b33d21;
 }
 
 /* "RECORD PROXY" */
-.top-right-text {
-    font-family:'Oswald stencil';
+#top-right-text {   
     font-size: 18px;
     color: #efecdb;
-    top: 15px;
-    bottom: 15px;
-    right: 10px;
-    display: inline-block;
+    float:left;
+    margin-right:15px;
 }
 
 /* button */
@@ -125,50 +72,80 @@ a{
     float: left;
 }
 
-#green-button {
-    width: 50px;
-    background-color: #5eb8ae;
-    shadow: 5;
-    shadow-color: #404040;
-    font-family:'Oswald stencil';
-    font-size: 14px;
-    display: inline-block;
-    text-align: center;
-    color: #efecdb;
+.proxyButton{	
+	width: 50px;
+	background-color: #888888;
+	font-size: 18px;
+	text-align: center;
+	color:#3c3c3c;
+	float:left;		
+	box-shadow:0px 0 5px #202020;
 }
 
-#red-button {
-    width: 50px;
-    background-color: #b13a22;
-    shadow: 5;
-    shadow-color: #404040;
-    font-family:'Oswald stencil';
-    font-size: 14px;
-    display: inline-block;
-    text-align: center;
-    color: #efecdb;
+#off.proxyButton.active{
+	background-color: #b13b21;
+	color:#efecdb;
 }
 
-#gray-button {
-    width: 50px;
-    background-color: #888888;
-    font-family:'Oswald stencil';
-    font-size: 14px;
-    font-size: 14px;
-    display: inline-block;
-    text-align: center;
-    color: #efecdb;
+#on.proxyButton.active{
+	background-color: #5eb8ae;
+	color:#efecdb;
+}
 
+#content{
+    width: 100%;    
+    background: #e5dec2;
+}
+
+#content-container{
+	margin:0 80px;
+}
+
+/* "USED SIZE:90000 KB" */
+#content-top {   
+  	padding:15px 0;
+    width: 100%;  
+    color:#76442b;
+    font-size: 16px;
+    text-align: right;
+}
+
+/*List*/
+#content-bottom {
+    height: 640px;   
+    position: relative;
+    background: #efecdb;
+    font-family: monaco;
+    font-size:14px;
+    font-color: #2d5f54;
+    overflow:scroll;    
+    padding: 20px;
+    margin: 0 auto;
+}
+
+#content-bottom ul{
+	width:5000px
 }
 
 /* "MODIFIED BY AMEDIA" */
-.footer {
-    width: 100%;
-    font-family:'Oswald stencil';
+#footer {
+    width: 100%;   
     font-size: 12px;
     font-color: #3a3a3a;
     text-align:center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-top: 15px;
+    padding: 15px 0;
 }
+
+/*clearfix*/
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+* html .clearfix { height: 1%; zoom: 1; }
+*:first-child+html .clearfix { zoom: 1; } 
+.clearfix { display: block; }
