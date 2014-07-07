@@ -4,10 +4,12 @@
 storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
 
 # For save in your harddisk.
-# storageManager: no.api.regurgitator.storage.SaveInHardDiskStorage
-# archivedFolder: /tmp/regurgitator/
+#storageManager: no.api.regurgitator.storage.SaveInHardDiskStorage
+#archivedFolder: /tmp/regurgitator/
 
 proxyPort: 9077
+
+recordOnStart: false
 
 #
 # General configuration

@@ -7,6 +7,8 @@ storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
 # storageManager: no.api.regurgitator.storage.SaveInHardDiskStorage
 # archivedFolder: mocktemp/
 
+recordOnStart: true
+
 proxyPort: 9077
 
 #
