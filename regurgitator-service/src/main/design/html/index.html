@@ -4,34 +4,28 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="stylesheets/app.css">
     <link rel="stylesheet" href="stylesheets/styles.css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>    
 </head>
 <body>
-<div class="header-wrapper" >
-    <img src="images/regurgitator-logo.png" alt="Regurgitator Logo"/>
-    <div class="header-container">
-        <div class="header-container-inner">
-            <div id="circle-gray-symbol"></div>
-            <!--Proxy on-->
-            <!--<div id="circle-red-symbol"></div>-->
-            <div class="top-right-text">RECORD PROXY:</div>
-            <!--<div id="button-container">-->
-            <!--Proxy off-->
-            <div id="gray-button">ON</div>
-            <div id="red-button">OFF</div>
-            <!--Proxy on-->
-            <!--
-                <div id="green-button">ON</div>
-                <div id="gray-button">ON</div>-->
-            <!--</div>-->
-        </div>
-    </div>
+<div id="header">
+	<div id="header-wrapper">
+	    <img src="images/regurgitator-logo.png" alt="Regurgitator Logo"/>
+	    <div id="header-container" class="clearfix">
+	        <div id="header-container-inner" class="clearfix">
+	            <div class="circleSymbol"></div>
+	            <div id="top-right-text">RECORD PROXY:</div>
+	            <div id="button-container" class="clearfix">	           
+		            <div class="proxyButton" id="on">ON</div>
+		            <div class="proxyButton active" id="off">OFF</div>
+		        </div>	           
+	        </div>
+	    </div>
+	</div>
 </div>
-<div class="content-container">
-    <div class="content-container-inner">
-        <div class="content-top">
-            USE SIZE: 9000 KB
-        </div>
-        <div class="content-bottom">
+<div id="content">
+    <div id="content-container">
+        <div id="content-top">USED SIZE: 9000 KB</div>
+        <div id="content-bottom">
             <ul>
                 <li><a href="/read/GET%2Fhttp%2Fari%2Fcomponada%2Fcomponent%2Fshow%2Fesi%2Fnormal%2Fsection%2Felement%2Fwww%2Fba%2Fno%2F41%2F7443635%2Fmedium%2Ffront%2Felement230%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Fsave.xml">GET/http/ari/componada/component/show/esi/normal/section/element/www/ba/no/41/7443635/medium/front/element230/lang/nb/NO/www/ba/no/lang/nb/NO/www/ba/no/save.xml</a></li>
                 <li><a href="/read/GET%2Fhttp%2Fari%2Fcomponada%2Fcomponent%2Fshow%2Fesi%2Fnormal%2Fsection%2Felement%2Fwww%2Fba%2Fno%2F41%2F7443635%2Fmedium%2Ffront%2Felement230%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Fsave.xml">GET/http/ari/componada/component/show/esi/normal/section/element/www/ba/no/41/7443635/medium/front/element230/lang/nb/NO/www/ba/no/lang/nb/NO/www/ba/no/save.xml</a></li>
@@ -83,9 +77,30 @@
                 <li><a href="/read/GET%2Fhttp%2Fari%2Fcomponada%2Fcomponent%2Fshow%2Fesi%2Fnormal%2Fsection%2Felement%2Fwww%2Fba%2Fno%2F41%2F7443635%2Fmedium%2Ffront%2Felement230%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Fsave.xml">GET/http/ari/componada/component/show/esi/normal/section/element/www/ba/no/41/7443635/medium/front/element230/lang/nb/NO/www/ba/no/lang/nb/NO/www/ba/no/save.xml</a></li>
                 <li><a href="/read/GET%2Fhttp%2Fari%2Fcomponada%2Fcomponent%2Fshow%2Fesi%2Fnormal%2Fsection%2Felement%2Fwww%2Fba%2Fno%2F41%2F7443635%2Fmedium%2Ffront%2Felement230%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Flang%2Fnb%2FNO%2Fwww%2Fba%2Fno%2Fsave.xml">GET/http/ari/componada/component/show/esi/normal/section/element/www/ba/no/41/7443635/medium/front/element230/lang/nb/NO/www/ba/no/lang/nb/NO/www/ba/no/save.xml</a></li>
             </ul>
-        </div>
-    </div>
-    <div class="footer">MODIFY BY AMEDIA</div>
+            <script type="text/javascript">
+			    //<![CDATA[ 
+		            function resize()
+		            {
+		                var heights = window.innerHeight;
+		                if(window.innerHeight >= 1000)
+		                {
+		                	heights = 640;                	
+		                }
+		                else
+		            	{
+		                	heights = heights - 150;
+		            	}
+		                document.getElementById("content-bottom").style.height = heights + "px";
+		            }
+		            resize();
+		            window.onresize = function() {
+		                resize();
+		            };
+			     //]]>  
+       		 </script> 
+        </div>  
+         <div id="footer">MODIFY BY AMEDIA</div>    
+    </div>     
 </div>
 </body>
 </html>
