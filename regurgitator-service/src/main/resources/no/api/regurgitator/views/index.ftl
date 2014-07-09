@@ -19,7 +19,7 @@
 <head>
     <title>Regurgitator Proxy recorder</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type='text/css' href="/asset/stylesheets/app.css">
+    <link rel="stylesheet" type='text/css' href="/asset/stylesheets/reset.css">
     <link rel="stylesheet" type='text/css' href="/asset/stylesheets/styles.css">
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>  
 </head>
@@ -32,7 +32,7 @@
 	            <div class="circleSymbol ${symbolactive}"></div>
 	            <div id="top-right-text">RECORD PROXY:</div>
 	            <div id="button-container" class="clearfix">
-	            	<form action="" method="post" name="toggle" id="toggleForm">		            	           
+	            	<form action="." method="post" name="toggle" id="toggleForm">		            	           
 			            <div class="proxyButton ${onactive}" id="on" onclick="javascript:document.getElementById('toggleForm').submit();">ON</div>
 			            <div class="proxyButton ${offactive}" id="off" onclick="javascript:document.getElementById('toggleForm').submit();">OFF</div>
 			       </form>
@@ -57,20 +57,18 @@
 		            function resize()
 		            {
 		                var heights = window.innerHeight;
-		                if(window.innerHeight >= 1000)
+		                if(window.innerHeight >= 800)
 		                {
 		                	heights = 640;                	
 		                }
 		                else
 		            	{
-		                	heights = heights - 150;
+		                	heights = heights - 200;
 		            	}
 		                document.getElementById("content-bottom").style.height = heights + "px";
 		            }
 		            resize();
-		            window.onresize = function() {
-		                resize();
-		            };
+		            window.onresize = function() {resize();};
 			     //]]>  
        		 </script> 
         </div>  
