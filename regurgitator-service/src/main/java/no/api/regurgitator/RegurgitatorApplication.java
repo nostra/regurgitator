@@ -1,6 +1,7 @@
 package no.api.regurgitator;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
@@ -22,6 +23,7 @@ public class RegurgitatorApplication extends Application<RegurgitatorConfigurati
     @Override
     public void initialize(Bootstrap<RegurgitatorConfiguration> bootstrap) {
         bootstrap.addBundle(new ViewBundle());
+        bootstrap.addBundle(new AssetsBundle("/asset/", "/asset/"));
     }
 
     @Override

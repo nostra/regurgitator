@@ -80,12 +80,7 @@ a{
 	text-align: center;
 	color:#3c3c3c;
 	float:left;		
-	cursor:pointer;
-	box-shadow:0px 0 5px #202020;	
-}
-
-#on, #off{
-	cursor: pointer;
+	box-shadow:0px 0 5px #202020;
 }
 
 #off.proxyButton.active{
