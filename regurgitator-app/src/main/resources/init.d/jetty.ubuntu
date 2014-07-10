@@ -1,0 +1,97 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          regurgitator
+# Required-Start:    $network $local_fs
+# Required-Stop:     $network $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# chkconfig: 2345 99 20
+# Short-Description: Start regurgitator
+# Description:       Start regurgitator dropwizard app
+### END INIT INFO
+
+JAVA_MEMSIZE="-Xms256m -Xmx256m -XX:MaxPermSize=512m"
+
+# Configuration
+##################################################
+# Setup JAVA if unset
+##################################################
+if [ -z "$JAVA" ]
+then
+  JAVA=$(which java)
+fi
+
+if [ -z "$JAVA" ]
+then
+  echo "Cannot find a Java JDK. Please set either set JAVA or put java (>=1.7) in your PATH." 2>&2
+  exit 1
+fi
+
+##################################################
+# EXPORT
+##################################################
+export DROPWIZARD_HOME=`pwd`
+export DROPWIZARD_CONF=${DROPWIZARD_HOME}/etc/dropwizard.yml
+export TMP=${DROPWIZARD_HOME}/pid
+export TMPDIR=${TMP}
+export DROPWIZARD_RUN=${TMP}
+export DROPWIZARD_LOGS=${DROPWIZARD_HOME}/log
+export JAVA_OPTIONS="-Duser.language=nb -Duser.region=NO -Dfile.encoding=UTF-8 -server -verbose:gc -XX:+PrintGCTimeStamps -XX:+PrintGCDetails -Xloggc:$DROPWIZARD_LOGS/gc.log $JAVA_MEMSIZE -verbose:class"
+export JAVA_OPTIONS="$JAVA_OPTIONS -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=9274 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
+export JAVA_OPTIONS="$JAVA_OPTIONS "${TMP}
+# Configure a username for starting regurgitator here
+export DROPWIZARD_USER="regurtest"
+
+DROPWIZARD_START=$DROPWIZARD_HOME/app/*service*.jar
+[ ! -f "$DROPWIZARD_START" ] && DROPWIZARD_START=$DROPWIZARD_HOME/app/*.jar
+
+case "$1" in
+  start)
+    echo "Deleting ${DROPWIZARD_RUN}/*"
+    rm -rvf ${DROPWIZARD_RUN}/*
+
+    echo -n "Starting ${DROPWIZARD_USER}: "
+    (
+      cd ${DROPWIZARD_LOGS}
+      for i in $(seq	20 -1 1); do
+        [ -f startup.logz.$i ] && mv startup.logz.$i startup.logz.$(($i+1))
+      done
+      mv startup.logz startup.logz.1
+    )
+    cd $DROPWIZARD_HOME
+
+    su $DROPWIZARD_USER - -c "${JAVA} -jar $DROPWIZARD_START server ${DROPWIZARD_CONF}" >> $DROPWIZARD_LOGS/startup.logz 2>&1 &
+
+    sleep 2
+    if [ "$(pgrep -U ${DROPWIZARD_USER})" ] ; then
+      pgrep -U ${DROPWIZARD_USER} > ${DROPWIZARD_RUN}/dropwizard.pid
+      echo "SUCCESS" 
+    else
+      echo "FAILED"
+    fi
+    ;;
+
+  stop)
+    echo -n "Stopping ${DROPWIZARD_USER}: "
+    /usr/bin/pgrep -u ${DROPWIZARD_USER} >/dev/null && /usr/bin/pkill -QUIT -u ${DROPWIZARD_USER}
+    sleep 2
+    /usr/bin/pgrep -u ${DROPWIZARD_USER} >/dev/null && /usr/bin/pkill -TERM -u ${DROPWIZARD_USER}
+    sleep 2
+    /usr/bin/pgrep -u ${DROPWIZARD_USER} >/dev/null && /usr/bin/pkill -KILL -u ${DROPWIZARD_USER}
+    ;;
+  restart)
+    $0 stop
+    sleep 1
+    $0 start
+    ;;
+  status)
+    status -p ${DROPWIZARD_RUN}/dropwizard.pid ${DROPWIZARD_USER}
+    exit # This is to exit with an error if not running
+    ;;
+  *)
+    echo "use start|stop|restart|status for day to day operation"
+    exit 1
+esac
+
+echo
