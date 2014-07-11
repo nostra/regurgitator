@@ -9,7 +9,7 @@ storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
 
 proxyPort: 9077
 
-recordOnStart: false
+recordOnStart: true
 
 #
 # General configuration
