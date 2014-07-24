@@ -72,7 +72,7 @@
 			     //]]>  
        		 </script> 
         </div>  
-         <div id="footer">MODIFY BY AMEDIA</div>    
+         <!--div id="footer">MODIFY BY AMEDIA</div-->
     </div>     
 </div>
 </body>
