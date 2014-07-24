@@ -7,6 +7,7 @@ import no.api.regurgitator.storage.template.ServerResponseStoreTestCase;
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.io.IOException;
 /**
  *
  */
+@Ignore
 public class SaveInHardDiskTest extends ServerResponseStoreTestCase {
 
     @ClassRule
