@@ -9,6 +9,8 @@ storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
 
 proxyPort: 9077
 
+# True - will start with recording and caching request.
+# False - will start with serving the cached content to each request.
 recordOnStart: true
 
 #
