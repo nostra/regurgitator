@@ -75,7 +75,8 @@ This can also be added to your MAVEN_OPTS, if you are running maven::
 Future directions
 ^^^^^^^^^^^^^^^^^
 
-* Support "cache mode". Fetch it if it is not already present
+* Support "cache mode". Fetch it only if it is not already present
+* In "cache mode", support expiration by size and / or time 
 * Paging in the key list
 * Invalidation of content
 * Searching for key / content
