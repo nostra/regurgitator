@@ -19,6 +19,7 @@
     <dependencySets>
         <dependencySet>
             <outputDirectory>/app</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
             <scope>runtime</scope>
         </dependencySet>
