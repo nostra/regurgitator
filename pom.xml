@@ -40,6 +40,10 @@
         <littleproxy.version>1.0.0-beta8</littleproxy.version>
 	</properties>
 
+    <prerequisites>
+      <maven>3.0.4</maven>
+    </prerequisites>
+
 	<dependencyManagement>
 		<dependencies>
             <dependency>
