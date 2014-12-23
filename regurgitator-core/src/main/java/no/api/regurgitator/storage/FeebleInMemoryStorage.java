@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Currently a rather feeble class which just stores everything internally
- * based on the keys.
+ * Currently a rather feeble class which just stores everything internally based on the keys.
  */
 public class FeebleInMemoryStorage implements ServerResponseStore {
+
     // Just for testing....
     private final Map<String, String> data = new HashMap<>();
     private static final XStream xstream = new XStream();
@@ -25,15 +25,15 @@ public class FeebleInMemoryStorage implements ServerResponseStore {
 
     @Override
     public void store(String key, ServerResponse page) {
-        store( key, xstream.toXML(page));
+        store(key, xstream.toXML(page));
     }
 
     private void store(String key, String content) {
-        if ( content == null || key == null ) {
+        if (content == null || key == null) {
             return;
         }
         String old = data.put(key, content);
-        if ( old != null ) {
+        if (old != null) {
             size -= old.length();
         }
         size += content.length();
@@ -42,11 +42,11 @@ public class FeebleInMemoryStorage implements ServerResponseStore {
     @Override
     public ServerResponse read(String key) {
         String payload = data.get(key);
-        if ( payload == null ) {
+        if (payload == null) {
             return null;
         }
 
-        return (ServerResponse)xstream.fromXML(payload);
+        return (ServerResponse) xstream.fromXML(payload);
     }
 
     @Override

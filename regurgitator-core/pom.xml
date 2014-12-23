@@ -11,6 +11,8 @@
     <artifactId>regurgitator-core</artifactId>
 
     <dependencies>
+        <!-- We must keep the dependencies here at a minimum, since we don't wanna drag a lot of libraries into the
+             mock package -->
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -29,8 +31,7 @@
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.0.14.Final</version>
+            <artifactId>netty-codec-http</artifactId>
         </dependency>
     </dependencies>
 

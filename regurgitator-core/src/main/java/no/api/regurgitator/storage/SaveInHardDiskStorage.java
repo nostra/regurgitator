@@ -25,7 +25,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     private int size = -1;
 
-    public SaveInHardDiskStorage( String archivedFolder ) {
+    public SaveInHardDiskStorage(String archivedFolder) {
         if (!archivedFolder.isEmpty() && archivedFolder.endsWith("/")) {
             saveDir = archivedFolder;
         }
@@ -46,7 +46,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
     }
 
     private void subLoopUpdateSize(Queue<File> dirs, File[] allFiles) {
-        if ( allFiles == null ) {
+        if (allFiles == null) {
             return;
         }
         for (File f : allFiles) {
@@ -119,7 +119,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
     }
 
     private void subLoopListAllTargetFile(Queue<File> dirs, List<String> allKeys, File[] allFiles) {
-        if ( allFiles == null ) {
+        if (allFiles == null) {
             return;
         }
         for (File f : allFiles) {

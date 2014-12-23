@@ -3,8 +3,7 @@ package no.api.regurgitator.storage;
 import java.util.List;
 
 /**
- * Notice that the constructor of the implementing class needs to
- * take RegurgitatorConfiguration as a parameter
+ * Notice that the constructor of the implementing class needs to take a String as a parameter. Pointing to a storage folder.
  */
 public interface ServerResponseStore {
 
@@ -19,7 +18,7 @@ public interface ServerResponseStore {
     ServerResponse read(String key);
 
     /**
-     *  @return List of keys for the benefit of a GUI
+     * @return List of keys for the benefit of a GUI
      */
     List<String> getKeys();
 
