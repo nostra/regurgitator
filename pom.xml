@@ -84,6 +84,16 @@
 				<artifactId>regurgitator-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>no.api.regurgitator</groupId>
+                <artifactId>regurgitator-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.api.regurgitator</groupId>
+                <artifactId>regurgitator-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -184,6 +194,17 @@
 				<scope>test</scope>
 			</dependency>
 
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -242,8 +263,10 @@
     </build>
 
     <modules>
-      <module>regurgitator-service</module>
-      <module>regurgitator-app</module>
+        <module>regurgitator-core</module>
+        <module>regurgitator-service</module>
+        <module>regurgitator-mock</module>
+        <module>regurgitator-app</module>
     </modules>
 
 </project>

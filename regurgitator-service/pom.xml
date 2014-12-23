@@ -12,8 +12,8 @@
 
 	<dependencies>
         <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
+            <groupId>no.api.regurgitator</groupId>
+            <artifactId>regurgitator-core</artifactId>
         </dependency>
 
 		<dependency>

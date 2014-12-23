@@ -12,9 +12,6 @@ import org.littleshoot.proxy.HttpFiltersAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- */
 public class ProxyRegurgitatorFilter extends HttpFiltersAdapter {
     private static final Logger log = LoggerFactory.getLogger(ProxyRegurgitatorFilter.class);
 

@@ -16,9 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 
-/**
- *
- */
 public class ProxyEaterFilter extends HttpFiltersAdapter {
     private static final Logger log = LoggerFactory.getLogger(ProxyEaterFilter.class);
     private final StringBuilder buffer = new StringBuilder();

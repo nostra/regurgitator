@@ -1,7 +1,6 @@
 package no.api.regurgitator.storage;
 
 import com.thoughtworks.xstream.XStream;
-import no.api.regurgitator.RegurgitatorConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -16,9 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-/**
- *
- */
 public class SaveInHardDiskStorage implements ServerResponseStore {
 
     private static final Logger log = LoggerFactory.getLogger(SaveInHardDiskStorage.class);
@@ -29,8 +25,7 @@ public class SaveInHardDiskStorage implements ServerResponseStore {
 
     private int size = -1;
 
-    public SaveInHardDiskStorage( RegurgitatorConfiguration conf ) {
-        String archivedFolder = conf.getArchivedFolder();
+    public SaveInHardDiskStorage( String archivedFolder ) {
         if (!archivedFolder.isEmpty() && archivedFolder.endsWith("/")) {
             saveDir = archivedFolder;
         }

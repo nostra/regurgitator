@@ -1,9 +1,5 @@
 package no.api.regurgitator.resources;
 
-/**
- *
- */
-
 import io.netty.handler.codec.http.HttpRequest;
 import no.api.regurgitator.filters.ProxyEaterFilter;
 import no.api.regurgitator.filters.ProxyRegurgitatorFilter;

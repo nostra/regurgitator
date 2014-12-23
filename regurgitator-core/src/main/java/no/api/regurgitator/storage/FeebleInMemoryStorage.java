@@ -1,7 +1,6 @@
 package no.api.regurgitator.storage;
 
 import com.thoughtworks.xstream.XStream;
-import no.api.regurgitator.RegurgitatorConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +19,7 @@ public class FeebleInMemoryStorage implements ServerResponseStore {
 
     private int size = 0;
 
-    public FeebleInMemoryStorage(RegurgitatorConfiguration ignored ) {
+    public FeebleInMemoryStorage(String ignored) {
         //We don't use the configuration in the in-memory storage
     }
 

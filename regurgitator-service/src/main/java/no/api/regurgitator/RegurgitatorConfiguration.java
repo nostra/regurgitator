@@ -7,11 +7,9 @@ import io.dropwizard.Configuration;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RegurgitatorConfiguration extends Configuration {
+
     @Valid
     @NotNull
     @JsonProperty
@@ -40,8 +38,10 @@ public class RegurgitatorConfiguration extends Configuration {
     }
 
     public Boolean getRecordOnStart() {
-    	return recordOnStart;
+        return recordOnStart;
     }
 
-    public String getArchivedFolder() { return archivedFolder;}
+    public String getArchivedFolder() {
+        return archivedFolder;
+    }
 }

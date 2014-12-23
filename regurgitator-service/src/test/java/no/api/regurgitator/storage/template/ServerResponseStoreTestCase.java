@@ -75,8 +75,8 @@ abstract public class ServerResponseStoreTestCase {
     private ServerResponseStore createServerResponseStore(RegurgitatorConfiguration configuration) {
         try {
             ServerResponseStore storage = (ServerResponseStore) Class.forName(configuration.getStorageManager())
-                    .getConstructor(RegurgitatorConfiguration.class)
-                    .newInstance(configuration);
+                    .getConstructor(String.class)
+                    .newInstance(configuration.getArchivedFolder());
             return storage;
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException
                 | ClassNotFoundException e) {
@@ -89,7 +89,7 @@ abstract public class ServerResponseStoreTestCase {
     public void testCreateServerResponseStore() {
         RegurgitatorConfiguration conf = getRegurgitatorConfiguration();
         storage = createServerResponseStore(conf);
-        assertNotNull("cann't create store", storage);
+        assertNotNull("can't create store", storage);
     }
 
     @Test
