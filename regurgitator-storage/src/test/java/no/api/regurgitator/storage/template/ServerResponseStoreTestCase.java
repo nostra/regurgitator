@@ -47,7 +47,7 @@ abstract public class ServerResponseStoreTestCase {
         s.append("GET_http://relax.v3.api.no/relax-1.6/polldata/41/7441831?if=long");
 
         for (int i = 0; s.length() < 1024; i++) {
-            s.append("&if" + i + "=log");
+            s.append("&if").append(i).append("=log");
         }
         FilePathKey longKey = new FilePathKey(s.toString());
         mockLongKey = longKey.getFullPath();

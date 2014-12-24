@@ -54,7 +54,6 @@ public class FilePathKey {
     private String customReplaceString(String target, char replace) {
         StringBuilder tempString = new StringBuilder();
         for (char singleChar : target.toCharArray()) {
-
             if (Character.isAlphabetic(singleChar) || Character.isDigit(singleChar)) {
                 tempString.append(singleChar);
             } else {
@@ -66,16 +65,11 @@ public class FilePathKey {
     }
 
     private String convertLinuxName(String s) {
-        if (StringUtils.isEmpty(s)) {
-            return "null";
-        } else {
-            return s;
-        }
+        return StringUtils.isEmpty(s) ? "null" : s;
     }
 
     private String makePathFile(List<String> pathFile) {
-        String ret = StringUtils.join(pathFile, "/");
-        return ret;
+        return StringUtils.join(pathFile, "/");
     }
 
     public FilePathKey(String key) {
