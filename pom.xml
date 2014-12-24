@@ -93,7 +93,7 @@
 			</dependency>
             <dependency>
                 <groupId>no.api.regurgitator</groupId>
-                <artifactId>regurgitator-core</artifactId>
+                <artifactId>regurgitator-storage</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -270,7 +270,7 @@
     </build>
 
     <modules>
-        <module>regurgitator-core</module>
+        <module>regurgitator-storage</module>
         <module>regurgitator-service</module>
         <module>regurgitator-mock</module>
         <module>regurgitator-app</module>

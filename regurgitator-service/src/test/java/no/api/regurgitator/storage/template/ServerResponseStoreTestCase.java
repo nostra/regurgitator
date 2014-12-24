@@ -1,9 +1,9 @@
 package no.api.regurgitator.storage.template;
 
 import com.thoughtworks.xstream.XStream;
-import no.api.regurgitator.RegurgitatorConfiguration;
 import no.api.regurgitator.storage.ServerResponse;
 import no.api.regurgitator.storage.ServerResponseStore;
+import no.api.regurgitator.storage.ServerResponseStoreLoader;
 import no.api.regurgitator.storage.key.FilePathKey;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
@@ -14,7 +14,6 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -62,33 +61,18 @@ abstract public class ServerResponseStoreTestCase {
     }
 
     /**
-     * For get configuration to create ServerResponseStore
-     */
-    abstract public RegurgitatorConfiguration getRegurgitatorConfiguration();
-
-    /**
      * For skip long url test due to some implementation not support long key.
      */
 
-    abstract public boolean getSkipLongTest();
+    public abstract String getStorageManager();
 
-    private ServerResponseStore createServerResponseStore(RegurgitatorConfiguration configuration) {
-        try {
-            ServerResponseStore storage = (ServerResponseStore) Class.forName(configuration.getStorageManager())
-                    .getConstructor(String.class)
-                    .newInstance(configuration.getArchivedFolder());
-            return storage;
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException
-                | ClassNotFoundException e) {
+    public abstract String getArchivedFolder();
 
-            return null;
-        }
-    }
+    public abstract boolean getSkipLongTest();
 
     @Before
     public void testCreateServerResponseStore() {
-        RegurgitatorConfiguration conf = getRegurgitatorConfiguration();
-        storage = createServerResponseStore(conf);
+        storage = ServerResponseStoreLoader.load(getStorageManager(), getArchivedFolder());
         assertNotNull("can't create store", storage);
     }
 

@@ -5,9 +5,6 @@ import org.apache.commons.lang.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class FilePathKey {
 
     private String fileName;
@@ -67,7 +64,6 @@ public class FilePathKey {
 
         return tempString.toString();
     }
-
 
     private String convertLinuxName(String s) {
         if (StringUtils.isEmpty(s)) {

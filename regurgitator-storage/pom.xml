@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>regurgitator-core</artifactId>
+    <artifactId>regurgitator-storage</artifactId>
 
     <dependencies>
         <!-- We must keep the dependencies here at a minimum, since we don't wanna drag a lot of libraries into the

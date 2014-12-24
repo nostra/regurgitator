@@ -2,9 +2,6 @@ package no.api.regurgitator.storage;
 
 import io.netty.handler.codec.http.HttpHeaders;
 
-/**
- *
- */
 public class ServerResponse {
 
     public String getContent() {

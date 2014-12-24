@@ -9,10 +9,10 @@ import no.api.regurgitator.health.AlwaysGood;
 import no.api.regurgitator.resources.IndexResource;
 import no.api.regurgitator.resources.ReadResource;
 import no.api.regurgitator.storage.ServerResponseStore;
-
-import java.lang.reflect.InvocationTargetException;
+import no.api.regurgitator.storage.ServerResponseStoreLoader;
 
 public class RegurgitatorApplication extends Application<RegurgitatorConfiguration> {
+
     public static void main(String[] args) throws Exception { // NOSONAR From framework
         new RegurgitatorApplication().run(args);
     }
@@ -25,19 +25,12 @@ public class RegurgitatorApplication extends Application<RegurgitatorConfigurati
 
     @Override
     public void run(RegurgitatorConfiguration configuration, Environment environment) {
-        ServerResponseStore storage;
-        try {
-            String storageManagerClassName = configuration.getStorageManager();
-                storage = (ServerResponseStore) Class.forName(storageManagerClassName)
-                        .getConstructor(String.class)
-                        .newInstance(configuration.getArchivedFolder());
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException
-                | ClassNotFoundException e) {
-            throw new RuntimeException("Could not find configuration of storage manager or declaration of it is wrong.",
-                    e);
-        }
+        // TODO storage might be null. Should probably add a null check on this.
+        final ServerResponseStore storage =
+                ServerResponseStoreLoader.load(configuration.getStorageManager(), configuration.getArchivedFolder());
         environment.healthChecks().register("dummy", new AlwaysGood());
-        environment.jersey().register(new IndexResource(storage, configuration.getRecordOnStart()).startProxy( configuration.getProxyPort()) );
+        environment.jersey().register(
+                new IndexResource(storage, configuration.getRecordOnStart()).startProxy(configuration.getProxyPort()));
         environment.jersey().register(new ReadResource(storage));
     }
 }
