@@ -1,9 +1,5 @@
 package no.api.regurgitator.resources;
 
-/**
- *
- */
-
 import io.netty.handler.codec.http.HttpRequest;
 import no.api.regurgitator.filters.ProxyEaterFilter;
 import no.api.regurgitator.filters.ProxyRegurgitatorFilter;
@@ -26,8 +22,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 @Path("/")
-@Produces(MediaType.TEXT_HTML )
+@Produces(MediaType.TEXT_HTML)
 public class IndexResource {
+
     private static Logger log = LoggerFactory.getLogger(IndexResource.class);
     private HttpProxyServer server = null;
     private Boolean toRecord = Boolean.TRUE;
@@ -49,40 +46,43 @@ public class IndexResource {
     public IndexView toggle() {
         toRecord = !toRecord;
 
-        log.debug("Toggled... Now storing the data? Answer: "+toRecord);
+        log.debug("Toggled... Now storing the data? Answer: " + toRecord);
 
         return new IndexView(toRecord, storage);
     }
 
     public Object startProxy(final int proxyPort) {
-        server =
-            DefaultHttpProxyServer.bootstrap()
+        server = DefaultHttpProxyServer.bootstrap()
                 .withPort(proxyPort)
-                .withFiltersSource(new HttpFiltersSourceAdapter() {
-                    @Override
-                    public HttpFilters filterRequest(HttpRequest originalRequest) {
-                        if (toRecord) {
-                            return new ProxyEaterFilter(storage, originalRequest);
-                        } else {
-                            return new ProxyRegurgitatorFilter(storage, originalRequest);
-                        }
-                    }
-
-                    //*
-                    // Notice that the limit might give some trouble. Consider increasing significantly,
-                    // _or_ handle chunks
-                    @Override
-                    public int getMaximumRequestBufferSizeInBytes() {
-                        return 10 * 1024 * 1024;
-                    }
-
-                    @Override
-                    public int getMaximumResponseBufferSizeInBytes() {
-                        return 10 * 1024 * 1024;
-                    }
-                    //*/
-                })
+                .withFiltersSource(createHttpFiltersSourceAdapter())
                 .start();
         return this;
+    }
+
+    private HttpFiltersSourceAdapter createHttpFiltersSourceAdapter() {
+        return new HttpFiltersSourceAdapter() {
+            @Override
+            public HttpFilters filterRequest(HttpRequest originalRequest) {
+                if (toRecord) {
+                    return new ProxyEaterFilter(storage, originalRequest);
+                } else {
+                    return new ProxyRegurgitatorFilter(storage, originalRequest);
+                }
+            }
+
+            //*
+            // Notice that the limit might give some trouble. Consider increasing significantly,
+            // _or_ handle chunks
+            @Override
+            public int getMaximumRequestBufferSizeInBytes() {
+                return 10 * 1024 * 1024;
+            }
+
+            @Override
+            public int getMaximumResponseBufferSizeInBytes() {
+                return 10 * 1024 * 1024;
+            }
+            //*/
+        };
     }
 }

@@ -5,9 +5,6 @@ import no.api.regurgitator.storage.ServerResponseStore;
 
 import java.nio.charset.Charset;
 
-/**
- *
- */
 public class IndexView extends View {
 
     private Boolean toRecord;

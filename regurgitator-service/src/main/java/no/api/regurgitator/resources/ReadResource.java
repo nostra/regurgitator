@@ -12,9 +12,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.Map;
 
-/**
- *
- */
 @Produces(MediaType.TEXT_PLAIN)
 @Path("/read/")
 public class ReadResource {
@@ -29,8 +26,8 @@ public class ReadResource {
     @Path("{key}")
     public String read(@Context HttpServletRequest req, @PathParam("key") String key) {
         ServerResponse page = storage.read(key);
-        if ( page == null ) {
-            return "Error: Could not find element with key "+key;
+        if (page == null) {
+            return "Error: Could not find element with key " + key;
         }
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> header : page.getHeaders()) {

@@ -16,10 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 
-/**
- *
- */
 public class ProxyEaterFilter extends HttpFiltersAdapter {
+
     private static final Logger log = LoggerFactory.getLogger(ProxyEaterFilter.class);
     private final StringBuilder buffer = new StringBuilder();
 
@@ -33,26 +31,26 @@ public class ProxyEaterFilter extends HttpFiltersAdapter {
     @Override
     public HttpObject responsePost(HttpObject httpObject) {
         if (httpObject instanceof ByteBufHolder) {
-            log.trace("Recording content on path {}",originalRequest.getUri());
+            log.trace("Recording content on path {}", originalRequest.getUri());
             String content = ((ByteBufHolder) httpObject).content().toString(Charset.forName("UTF-8"));
             buffer.append(content);
 
         }
-        if (ProxyUtils.isLastChunk(httpObject) && httpObject instanceof ByteBufHolder  ) {
+        if (ProxyUtils.isLastChunk(httpObject) && httpObject instanceof ByteBufHolder) {
             String key = createKey(originalRequest);
 
             ServerResponse page = new ServerResponse();
             page.setContent(buffer.toString());
 
-            if ( httpObject instanceof HttpResponse) {
+            if (httpObject instanceof HttpResponse) {
                 page.setStatus(((HttpResponse) httpObject).getStatus().code());
             }
 
-            if ( httpObject instanceof  HttpMessage ) {
-                HttpHeaders headers = ((HttpMessage)httpObject).headers();
+            if (httpObject instanceof HttpMessage) {
+                HttpHeaders headers = ((HttpMessage) httpObject).headers();
                 page.setHeaders(headers);
             }
-            log.debug("Storing on key "+key);
+            log.debug("Storing on key " + key);
             storage.store(key, page);
         }
         return httpObject;
@@ -62,7 +60,7 @@ public class ProxyEaterFilter extends HttpFiltersAdapter {
      * Creating storage key
      */
     public static String createKey(HttpRequest source) {
-        String originalKey = source.getMethod()+"_"+ source.getUri();
+        String originalKey = source.getMethod() + "_" + source.getUri();
         FilePathKey key = new FilePathKey(originalKey);
         return key.getFullPath();
     }
