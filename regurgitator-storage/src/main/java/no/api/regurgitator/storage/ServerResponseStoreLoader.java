@@ -1,11 +1,16 @@
 package no.api.regurgitator.storage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationTargetException;
 
 /**
  * ServerResponseStoreLoader that loads from a given full class name.
  */
 public class ServerResponseStoreLoader {
+
+    private static final Logger log = LoggerFactory.getLogger(ServerResponseStoreLoader.class);
 
     private ServerResponseStoreLoader() {
         // Intentional
@@ -31,6 +36,7 @@ public class ServerResponseStoreLoader {
                 | InstantiationException
                 | IllegalAccessException
                 | ClassNotFoundException e) {
+            log.warn("Could not load class {}", className, e);
             return null;
         }
     }

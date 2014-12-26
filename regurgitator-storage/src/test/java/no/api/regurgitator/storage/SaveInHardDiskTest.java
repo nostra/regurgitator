@@ -13,7 +13,7 @@ public class SaveInHardDiskTest extends ServerResponseStoreTestCase {
 
     @Override
     public String getStorageManager() {
-        return "no.api.regurgitator.storage.SaveInHardDiskStorage";
+        return SaveInHardDiskStorage.class.getName();
     }
 
     @Override

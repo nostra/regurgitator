@@ -16,7 +16,7 @@ public class FreebleInMemoryStorageTest extends ServerResponseStoreTestCase {
 
     @Override
     public String getStorageManager() {
-        return "no.api.regurgitator.storage.FeebleInMemoryStorage";
+        return FeebleInMemoryStorage.class.getName();
     }
 
     @Override
