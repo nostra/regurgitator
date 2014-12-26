@@ -7,10 +7,10 @@ import no.api.regurgitator.storage.key.FilePathKey;
 
 /**
  * Helper class for loading Regurgitator mock files from disk and into ServerResponse objects.
- * <p/>
+ *
  * This class is intended to be used in Unit and Integration tests, so it is possible to test on cache files generated
  * by Regurgitator.
- * <p/>
+ *
  * Typical usage:
  * <pre>
  *     // Remember trailing slash in path
