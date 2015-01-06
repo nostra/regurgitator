@@ -43,12 +43,12 @@
 </div>
 <div id="content">
     <div id="content-container">
-        <div id="content-top">USED SIZE:  ${storage.sizeAsKb} KB</div>
+        <div id="content-top"><#if storage.size gt -1>USED SIZE:  ${storage.sizeAsKb} KB</#if></div>
         <div id="content-bottom">
             <ul>
             	<#list storage.keys as key>
             		<#if !(key?ends_with("_headers"))>
-            			<li><a href="/read/${key?url}">${key}</a></li>
+            			<li><a href="/read/${key.requestMethod}/${key.requestURI?url}">${key.requestMethod} ${key.requestURI}</a></li>
             		</#if>
             	</#list>
             </ul>
@@ -72,8 +72,7 @@
 			     //]]>  
        		 </script> 
         </div>  
-         <!--div id="footer">MODIFY BY AMEDIA</div-->
-    </div>     
+    </div>
 </div>
 </body>
 </html>

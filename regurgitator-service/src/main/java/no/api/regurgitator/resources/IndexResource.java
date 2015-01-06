@@ -7,7 +7,6 @@ import no.api.regurgitator.storage.ServerResponseStore;
 import no.api.regurgitator.views.IndexView;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
-import org.littleshoot.proxy.HttpProxyServer;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,6 @@ import javax.ws.rs.core.MediaType;
 public class IndexResource {
 
     private static Logger log = LoggerFactory.getLogger(IndexResource.class);
-    private HttpProxyServer server = null;
     private Boolean toRecord = Boolean.TRUE;
     private ServerResponseStore storage;
 
@@ -52,7 +50,7 @@ public class IndexResource {
     }
 
     public Object startProxy(final int proxyPort) {
-        server = DefaultHttpProxyServer.bootstrap()
+        DefaultHttpProxyServer.bootstrap()
                 .withPort(proxyPort)
                 .withFiltersSource(createHttpFiltersSourceAdapter())
                 .start();

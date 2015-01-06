@@ -1,6 +1,5 @@
 package no.api.regurgitator.mock;
 
-import io.netty.handler.codec.http.HttpMethod;
 import no.api.regurgitator.storage.ServerResponse;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,6 +7,9 @@ import org.junit.Test;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
+
+import static no.api.regurgitator.storage.header.ServerRequestMethod.GET;
 
 public class RegurgitatorMockLoaderTest {
 
@@ -21,19 +23,21 @@ public class RegurgitatorMockLoaderTest {
 
     @Test
     public void testValidResponse() {
-        ServerResponse response = mockLoader.getMockFor(HttpMethod.GET, "http://www.rb.no");
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.getContent().contains("apiHeaderMultifix"));
+        Optional<ServerResponse> response = mockLoader.getMockFor(GET,
+                                                                  "http://www.rb.no");
+        Assert.assertTrue(response.isPresent());
+        Assert.assertTrue(response.get().getContent().contains("apiHeaderMultifix"));
     }
 
     @Test
     public void testNonExistingResponse() {
-        Assert.assertNull(mockLoader.getMockFor(HttpMethod.GET, "http://www.oa.no"));
+        Optional<ServerResponse> response = mockLoader.getMockFor(GET, "http://www.oa.no");
+        Assert.assertFalse(response.isPresent());
     }
 
     /*
-         * Make sure tests can be executed from both Regurgitator root and from inside regurgitator-mock.
-         */
+     * Make sure tests can be executed from both Regurgitator root and from inside regurgitator-mock.
+     */
     private String locateMockPath() {
         String expectedPath = "./regurgitator-mock/" + BASE_MOCK_PATH;
         Path path = Paths.get(expectedPath);

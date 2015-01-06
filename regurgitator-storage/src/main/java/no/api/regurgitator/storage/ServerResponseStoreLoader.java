@@ -13,7 +13,7 @@ public class ServerResponseStoreLoader {
     private static final Logger log = LoggerFactory.getLogger(ServerResponseStoreLoader.class);
 
     private ServerResponseStoreLoader() {
-        // Intentional
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -28,6 +28,7 @@ public class ServerResponseStoreLoader {
      */
     public static ServerResponseStore load(String className, String archivedFolder) {
         try {
+            log.info("***Loading ServerResponseStore : " + className);
             return (ServerResponseStore) Class.forName(className)
                     .getConstructor(String.class)
                     .newInstance(archivedFolder);

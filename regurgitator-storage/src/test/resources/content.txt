@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> <no.api.relax.core.beans.ApiPolldata>
+        <articleId>7441831</articleId> <votes> <int>111</int> <int>582</int>
+        <int>13</int> </votes> </no.api.relax.core.beans.ApiPolldata>
