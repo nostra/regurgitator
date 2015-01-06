@@ -35,7 +35,6 @@ public class ProxyRegurgitatorFilter extends HttpFiltersAdapter {
                 new DefaultFullHttpResponse(originalRequest.getProtocolVersion(), HttpResponseStatus.OK);
         ByteBuf content = response.content();
         ServerResponseKey key = createServerResponseKeyFromRequest();
-        log.error("Key {}", key );
         final Optional<ServerResponse> serverResponse = storage.read(key);
         if (!serverResponse.isPresent()) {
             // TODO Need to create something with better headers
