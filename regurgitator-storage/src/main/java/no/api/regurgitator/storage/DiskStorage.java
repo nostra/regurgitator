@@ -33,11 +33,13 @@ public class DiskStorage implements ServerResponseStore {
     private String saveDir = "Save/";
 
     public DiskStorage(String archivedFolder) {
-        if (!archivedFolder.isEmpty() && archivedFolder.endsWith("/")) {
+        if (!archivedFolder.isEmpty()) {
             saveDir = archivedFolder;
+            if (!archivedFolder.endsWith("/")) {
+                saveDir += "/";
+            }
         } else {
-            // TODO Replace / test with a real isDirectory check.
-            log.warn("The given folder for storage of Regurgitator files are either empty or not ending with a slash.");
+            log.error("The given folder for storage of Regurgitator files empty. Please fix!");
         }
     }
 

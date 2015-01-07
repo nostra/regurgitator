@@ -53,20 +53,20 @@ public final class ServerResponseKey implements Comparable<ServerResponseKey> {
     }
 
     @Override
-    public int compareTo(ServerResponseKey o) {
-        return this.toString().compareTo(o.toString());
+    public int compareTo(ServerResponseKey obj) {
+        return this.toString().compareTo(obj.toString());
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof ServerResponseKey)) {
+        if (!(obj instanceof ServerResponseKey)) {
             return false;
         }
 
-        final ServerResponseKey that = (ServerResponseKey) o;
+        final ServerResponseKey that = (ServerResponseKey) obj;
 
         if (requestMethod != that.requestMethod) {
             return false;

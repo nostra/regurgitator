@@ -1,11 +1,11 @@
 # http://dropwizard.github.io/dropwizard/manual/configuration.html
 
 # For save in memory.
-storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
+#storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
 
 # For save in your harddisk.
-#storageManager: no.api.regurgitator.storage.DiskStorage
-#archivedFolder: /tmp/regurgitator/
+storageManager: no.api.regurgitator.storage.DiskStorage
+archivedFolder: /tmp/regurgitator/
 
 proxyPort: 9077
 
