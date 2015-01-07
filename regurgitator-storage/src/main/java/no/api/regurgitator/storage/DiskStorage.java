@@ -170,8 +170,8 @@ public class DiskStorage implements ServerResponseStore {
     }
 
     private boolean isValidServerResponse(ServerResponse sr) {
-        return sr == null || sr.getContent() == null || sr.getMeta() == null ||
-                sr.getMeta().getMethod() == null || sr.getMeta().getUri() == null;
+        return !(sr == null || sr.getContent() == null || sr.getMeta() == null ||
+                sr.getMeta().getMethod() == null || sr.getMeta().getUri() == null);
     }
 
 
