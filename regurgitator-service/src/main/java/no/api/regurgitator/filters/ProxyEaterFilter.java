@@ -1,24 +1,29 @@
 package no.api.regurgitator.filters;
 
 import io.netty.buffer.ByteBufHolder;
-import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import no.api.regurgitator.storage.ServerResponse;
+import no.api.regurgitator.storage.ServerResponseMeta;
 import no.api.regurgitator.storage.ServerResponseStore;
-import no.api.regurgitator.storage.key.FilePathKey;
+import no.api.regurgitator.storage.header.Headers;
+import no.api.regurgitator.storage.header.NettyHttpHeadersUtil;
 import org.littleshoot.proxy.HttpFiltersAdapter;
 import org.littleshoot.proxy.impl.ProxyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
+
+import static no.api.regurgitator.storage.header.ServerRequestMethod.findRequestMethodFromString;
 
 public class ProxyEaterFilter extends HttpFiltersAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(ProxyEaterFilter.class);
+
     private final StringBuilder buffer = new StringBuilder();
 
     private final ServerResponseStore storage;
@@ -34,35 +39,27 @@ public class ProxyEaterFilter extends HttpFiltersAdapter {
             log.trace("Recording content on path {}", originalRequest.getUri());
             String content = ((ByteBufHolder) httpObject).content().toString(Charset.forName("UTF-8"));
             buffer.append(content);
-
         }
+
         if (ProxyUtils.isLastChunk(httpObject) && httpObject instanceof ByteBufHolder) {
-            String key = createKey(originalRequest);
 
-            ServerResponse page = new ServerResponse();
-            page.setContent(buffer.toString());
-
-            if (httpObject instanceof HttpResponse) {
-                page.setStatus(((HttpResponse) httpObject).getStatus().code());
-            }
-
+            Headers headers = new Headers(new HashMap<>());
+            int status = -1;
             if (httpObject instanceof HttpMessage) {
-                HttpHeaders headers = ((HttpMessage) httpObject).headers();
-                page.setHeaders(headers);
+                if (httpObject instanceof HttpResponse) {
+                    status = ((HttpResponse) httpObject).getStatus().code();
+                }
+                headers = NettyHttpHeadersUtil.convert(((HttpMessage) httpObject).headers());
             }
-            log.debug("Storing on key " + key);
-            storage.store(key, page);
+            storage.store(new ServerResponse(
+                    buffer.toString(),
+                    new ServerResponseMeta(
+                            status,
+                            findRequestMethodFromString(originalRequest.getMethod().toString()),
+                            originalRequest.getUri(),
+                            headers)));
         }
         return httpObject;
-    }
-
-    /**
-     * Creating storage key
-     */
-    public static String createKey(HttpRequest source) {
-        String originalKey = source.getMethod() + "_" + source.getUri();
-        FilePathKey key = new FilePathKey(originalKey);
-        return key.getFullPath();
     }
 
 }

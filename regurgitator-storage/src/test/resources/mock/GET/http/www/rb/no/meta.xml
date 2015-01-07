@@ -1,0 +1,124 @@
+<no.api.regurgitator.storage.ServerResponseMeta>
+    <status>200</status>
+    <method>GET</method>
+    <uri>http://www.rb.no</uri>
+    <headers>
+        <headers>
+            <entry>
+                <string>x-channel-maxage</string>
+                <list>
+                    <string>86400</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Cache</string>
+                <list>
+                    <string>HIT</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Server</string>
+                <list>
+                    <string>Jetty(8.1.15.v20140411)</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Trace-Cache</string>
+                <list>
+                    <string>[varnish-v3local ; textur.api.kunder.linpro.no ; Thu, 25 Dec 2014 21:30:22 GMT ; 52261.000 orig-ttl ; 34139 orig-Age]</string>
+                    <string>[varnish-esi3 ; kaffe.api.kunder.linpro.no ; Thu, 25 Dec 2014 21:30:22 GMT ; 52261.000 orig-ttl ; 34139 orig-Age ; 52183.528 obj.ttl]</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Date</string>
+                <list>
+                    <string>Thu, 25 Dec 2014 21:31:40 GMT</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Via</string>
+                <list>
+                    <string>1.1 varnish-plus-v3</string>
+                    <string>1.1 varnish-plus-v3</string>
+                    <string>1.1.LazeeTown.local</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Country-Code</string>
+                <list>
+                    <string>NO</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-UA-Compatible</string>
+                <list>
+                    <string>IE=Edge</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Varnish</string>
+                <list>
+                    <string>1415348433</string>
+                    <string>1865737036 1865716420</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Cache-Control</string>
+                <list>
+                    <string>must-revalidate</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Trace-App</string>
+                <list>
+                    <string>[seamstress ; kanelbullar.api.kunder.linpro.no ; Thu Dec 25 22:30:22 CET 2014]</string>
+                    <string>[relax ; knuff.api.kunder.linpro.no ; Thu Dec 25 22:30:22 CET 2014]</string>
+                    <string>[relax ; jerrik.api.kunder.linpro.no ; Thu Dec 25 16:20:35 CET 2014]</string>
+                    <string>[admapper ; tupplur.api.kunder.linpro.no ; Thu Dec 25 13:01:23 CET 2014]</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Src-Webcache</string>
+                <list>
+                    <string>kaffe.api.kunder.linpro.no textur.api.kunder.linpro.no</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Vary</string>
+                <list>
+                    <string>User-Agent</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Block</string>
+                <list>
+                    <string></string>
+                </list>
+            </entry>
+            <entry>
+                <string>Content-Length</string>
+                <list>
+                    <string>226319</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Content-Language</string>
+                <list>
+                    <string>nb-NO-www.rb.no</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Age</string>
+                <list>
+                    <string>34216</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Content-Type</string>
+                <list>
+                    <string>text/html;charset=UTF-8</string>
+                </list>
+            </entry>
+        </headers>
+    </headers>
+</no.api.regurgitator.storage.ServerResponseMeta>

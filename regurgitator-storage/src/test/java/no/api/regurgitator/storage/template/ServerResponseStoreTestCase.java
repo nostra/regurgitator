@@ -2,38 +2,51 @@ package no.api.regurgitator.storage.template;
 
 import com.thoughtworks.xstream.XStream;
 import no.api.regurgitator.storage.ServerResponse;
+import no.api.regurgitator.storage.ServerResponseKey;
+import no.api.regurgitator.storage.ServerResponseMeta;
 import no.api.regurgitator.storage.ServerResponseStore;
 import no.api.regurgitator.storage.ServerResponseStoreLoader;
-import no.api.regurgitator.storage.key.FilePathKey;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Optional;
 
+import static no.api.regurgitator.storage.header.ServerRequestMethod.GET;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * This class is a basic template for test ServerResponseStore Class
  */
 abstract public class ServerResponseStoreTestCase {
 
-    private static String mockShortKey;
+    private static final Logger log = LoggerFactory.getLogger(ServerResponseStoreTestCase.class);
 
-    private static String mockLongKey;
+    private static ServerResponseKey mockShortKey;
 
-    private static String mockStrangeKey;
+    private static ServerResponseKey mockLongKey;
 
-    private static String mockEmptyKey;
+    private static ServerResponseKey mockStrangeKey;
 
-    private static ServerResponse mockResponse;
+    private static ServerResponseKey mockEmptyKey;
+
+    private static ServerResponse mockShortKeyResponse;
+
+    private static ServerResponse mockLongKeyResponse;
+
+    private static ServerResponse mockStrangeKeyResponse;
 
     private ServerResponseStore storage;
+
+    private static XStream xstream = new XStream();
 
     protected static String getFileResource(String file) {
         return ServerResponseStoreTestCase.class.getResource(file).getPath();
@@ -41,23 +54,72 @@ abstract public class ServerResponseStoreTestCase {
 
     @BeforeClass
     public static void initMock() throws IOException {
-        FilePathKey shortKey = new FilePathKey("GET_http://relax.v3.api.no/relax-1.6/polldata/41/7441831");
-        mockShortKey = shortKey.getFullPath();
+        mockShortKey = buildMockShortKey();
+        mockLongKey = buildMockLongKey();
+        mockStrangeKey = buildMockStrangeKey();
+        mockEmptyKey = buildMockEmptyKey();
+        mockShortKeyResponse = buildShortKeyResponse();
+        mockLongKeyResponse = buildLongKeyResponse();
+        mockStrangeKeyResponse = buildStrangeKeyResponse();
+    }
+
+    private static ServerResponse buildResponse() throws IOException {
+        ServerResponseMeta meta = (ServerResponseMeta) xstream.fromXML(IOUtils.toString(new FileInputStream(
+                new File(getFileResource("/meta.xml")))));
+        return new ServerResponse(IOUtils.toString(new FileInputStream(new File(getFileResource("/content.txt")))), meta);
+    }
+
+    private static ServerResponse buildShortKeyResponse() throws IOException {
+        ServerResponse r = buildResponse();
+        ServerResponseMeta meta = new ServerResponseMeta(
+                r.getMeta().getStatus(),
+                r.getMeta().getMethod(),
+                buildMockShortKey().getRequestURI(),
+                r.getMeta().getHeaders());
+        return new ServerResponse(r.getContent(), meta);
+    }
+
+    private static ServerResponseKey buildMockShortKey() {
+        return new ServerResponseKey(GET, "http://relax.v3.api.no/relax-1.6/polldata/41/7441831");
+    }
+
+    private static ServerResponse buildLongKeyResponse() throws IOException {
+        ServerResponse r = buildResponse();
+        ServerResponseMeta meta = new ServerResponseMeta(
+                r.getMeta().getStatus(),
+                r.getMeta().getMethod(),
+                buildMockLongKey().getRequestURI(),
+                r.getMeta().getHeaders());
+        return new ServerResponse(r.getContent(), meta);
+    }
+
+
+    private static ServerResponseKey buildMockLongKey() {
         StringBuilder s = new StringBuilder();
-        s.append("GET_http://relax.v3.api.no/relax-1.6/polldata/41/7441831?if=long");
+        s.append("http://relax.v3.api.no/relax-1.6/polldata/41/7441831?if=long");
 
         for (int i = 0; s.length() < 1024; i++) {
             s.append("&if").append(i).append("=log");
         }
-        FilePathKey longKey = new FilePathKey(s.toString());
-        mockLongKey = longKey.getFullPath();
-        FilePathKey strangKey = new FilePathKey("GET_http://www.ba.no/?a=%20&&amp;=+");
-        mockStrangeKey = strangKey.getFullPath();
-        XStream xstream = new XStream();
-        mockResponse = (ServerResponse) xstream.fromXML(
-                IOUtils.toString(new FileInputStream(
-                        new File(getFileResource("/mockresponse.xml")))));
-        mockEmptyKey = "GET_http://relax.v3.api.no/relax-1.6/polldata/41/555555";
+        return new ServerResponseKey(GET, s.toString());
+    }
+
+    private static ServerResponseKey buildMockEmptyKey() {
+        return new ServerResponseKey(GET, "http://relax.v3.api.no/relax-1.6/polldata/41/555555");
+    }
+
+    private static ServerResponse buildStrangeKeyResponse() throws IOException {
+        ServerResponse r = buildResponse();
+        ServerResponseMeta meta = new ServerResponseMeta(
+                r.getMeta().getStatus(),
+                r.getMeta().getMethod(),
+                buildMockStrangeKey().getRequestURI(),
+                r.getMeta().getHeaders());
+        return new ServerResponse(r.getContent(), meta);
+    }
+
+    private static ServerResponseKey buildMockStrangeKey() {
+        return new ServerResponseKey(GET, "http://www.ba.no/?a=%20&&amp;=+");
     }
 
     /**
@@ -73,13 +135,15 @@ abstract public class ServerResponseStoreTestCase {
     @Before
     public void testCreateServerResponseStore() {
         storage = ServerResponseStoreLoader.load(getStorageManager(), getArchivedFolder());
-        assertNotNull("can't create store", storage);
+        assertNotNull("Can't create store", storage);
     }
 
     @Test
     public void testShortURLSave() {
-        storage.store(mockShortKey, mockResponse);
-        Assert.assertEquals(mockResponse.getContent(), storage.read(mockShortKey).getContent());
+        storage.store(mockShortKeyResponse);
+        Optional<ServerResponse> read = storage.read(mockShortKey);
+        Assert.assertTrue(read.isPresent());
+        Assert.assertEquals(mockShortKeyResponse.getContent(), read.get().getContent());
 
         //TODO: create more mockResponse such as image or response from same uri with different post
     }
@@ -87,21 +151,25 @@ abstract public class ServerResponseStoreTestCase {
     @Test
     public void testLongURLSave() {
         if (!getSkipLongTest()) {
-            storage.store(mockLongKey, mockResponse);
-            Assert.assertEquals(mockResponse.getContent(), storage.read(mockLongKey).getContent());
+            storage.store(mockLongKeyResponse);
+            Optional<ServerResponse> read = storage.read(mockLongKey);
+            Assert.assertTrue(read.isPresent());
+            Assert.assertEquals(mockLongKeyResponse.getContent(), read.get().getContent());
         }
     }
 
     @Test
     public void testStrangeURLSave() {
-        storage.store(mockStrangeKey, mockResponse);
-        Assert.assertEquals(mockResponse.getContent(), storage.read(mockStrangeKey).getContent());
+        storage.store(mockStrangeKeyResponse);
+        Optional<ServerResponse> read = storage.read(mockStrangeKey);
+        Assert.assertTrue(read.isPresent());
+        Assert.assertEquals(mockStrangeKeyResponse.getContent(), read.get().getContent());
     }
 
     @Test
     public void testEmptyPageRequest() {
         // test not saved page
-        assertNull(storage.read(mockEmptyKey));
+        assertFalse(storage.read(mockEmptyKey).isPresent());
     }
 
 

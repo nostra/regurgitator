@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Currently a rather feeble class which just stores everything internally based on the keys.
@@ -14,58 +15,60 @@ import java.util.Map;
 public class FeebleInMemoryStorage implements ServerResponseStore {
 
     // Just for testing....
-    private final Map<String, String> data = new HashMap<>();
+    private final Map<ServerResponseKey, String> data = new HashMap<>();
+
     private static final XStream xstream = new XStream();
 
     private int size = 0;
 
-    public FeebleInMemoryStorage(String ignored) {
-        //We don't use the configuration in the in-memory storage
+    public FeebleInMemoryStorage(String ignoredPath) {
+        // We do not use given path here since this class stores the data in memory.
     }
 
     @Override
-    public void store(String key, ServerResponse page) {
-        store(key, xstream.toXML(page));
-    }
-
-    private void store(String key, String content) {
-        if (content == null || key == null) {
-            return;
+    public Optional<ServerResponseKey> store(ServerResponse serverResponse) {
+        ServerResponseKey key = ServerResponseKey.fromServerResponse(serverResponse);
+        if (!store(key, xstream.toXML(serverResponse))) {
+            return Optional.empty();
         }
-        String old = data.put(key, content);
-        if (old != null) {
-            size -= old.length();
-        }
-        size += content.length();
+        return Optional.ofNullable(key);
     }
 
     @Override
-    public ServerResponse read(String key) {
+    public Optional<ServerResponse> read(ServerResponseKey key) {
         String payload = data.get(key);
         if (payload == null) {
-            return null;
+            return Optional.empty();
         }
-
-        return (ServerResponse) xstream.fromXML(payload);
+        return Optional.ofNullable((ServerResponse) xstream.fromXML(payload));
     }
 
     @Override
-    public List<String> getKeys() {
-        List<String> keys = new ArrayList<>(data.keySet());
+    public List<ServerResponseKey> getKeys() {
+        List<ServerResponseKey> keys = new ArrayList<>(data.keySet());
         Collections.sort(keys);
         return keys;
     }
 
-    /**
-     * Just an indication of space
-     */
     @Override
     public long getSize() {
         return size;
     }
 
     @Override
-    public long getSizeAsKb() {
+    public double getSizeAsKb() {
         return size / 1024L;
+    }
+
+    private boolean store(ServerResponseKey key, String content) {
+        if (content == null || key == null) {
+            return false;
+        }
+        String old = data.put(key, content);
+        if (old != null) {
+            size -= old.length();
+        }
+        size += content.length();
+        return true;
     }
 }

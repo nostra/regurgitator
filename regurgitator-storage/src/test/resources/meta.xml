@@ -1,0 +1,91 @@
+<no.api.regurgitator.storage.ServerResponseMeta>
+    <status>200</status>
+    <method>GET</method>
+    <uri>http://www.oa.no</uri>
+    <headers>
+        <headers>
+            <entry>
+                <string>x-channel-maxage</string>
+                <list>
+                    <string>205</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Server</string>
+                <list>
+                    <string>Resin/3.0.24</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Trace-Cache</string>
+                <list>
+                    <string>[varnish-v3local ; textur.api.kunder.linpro.no ; Fri, 27 Jun 2014 01:01:34 GMT ; 205.000
+                        orig-ttl ; 0 orig-Age]
+                    </string>
+                </list>
+            </entry>
+            <entry>
+                <string>Date</string>
+                <list>
+                    <string>Fri, 27 Jun 2014 01:01:34 GMT</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Via</string>
+                <list>
+                    <string>1.1 varnish</string>
+                    <string>1.1.192.168.50.139</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Accept-Ranges</string>
+                <list>
+                    <string>bytes</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Varnish</string>
+                <list>
+                    <string>3151809932</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Cache-Control</string>
+                <list>
+                    <string>max-age=30, channel=&quot;http://localhost:9006/atomizer/event/current&quot;,
+                        channel-maxage=205, group=&quot;/relax-knuff&quot;, group=&quot;/pub41&quot;, group=&quot;/art7441831&quot;</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Trace-App</string>
+                <list>
+                    <string>[relax ; knuff.api.kunder.linpro.no ; Fri Jun 27 03:01:34 CEST 2014]</string>
+                </list>
+            </entry>
+            <entry>
+                <string>X-Src-Webcache</string>
+                <list>
+                    <string>textur.api.kunder.linpro.no</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Content-Length</string>
+                <list>
+                    <string>230</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Age</string>
+                <list>
+                    <string>0</string>
+                </list>
+            </entry>
+            <entry>
+                <string>Content-Type</string>
+                <list>
+                    <string>application/xml;charset=ISO-8859-1</string>
+                </list>
+            </entry>
+        </headers>
+    </headers>
+</no.api.regurgitator.storage.ServerResponseMeta>
