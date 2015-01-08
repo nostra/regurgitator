@@ -47,6 +47,8 @@ public final class ServerResponseKey implements Comparable<ServerResponseKey> {
     /**
      * Return the key converted to a path for use by {@link no.api.regurgitator.storage.ServerResponseStore}
      * implementations.
+     *
+     * @return A string representation of the path that should be used for storing a response on disk.
      */
     public String getPath() {
         return this.keyPath;

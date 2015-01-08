@@ -18,7 +18,8 @@ import java.util.Optional;
  * <pre>
  *     // Remember trailing slash in path
  *     RegurgitatorMockLoader mockLoader = new RegurgitatorMockLoader("./src/test/resources/path/to/mock/dir/");
- *     Optional&lt;ServerResponse&gt; response = mockLoader.getMockFor(ServerResponseKey.RequestMethod.GET, "http://www.vg.no/index.php");
+ *     Optional&lt;ServerResponse&gt; response = mockLoader.getMockFor(ServerResponseKey.RequestMethod.GET,
+ * "http://www.vg.no/index.php");
  * </pre>
  */
 public class RegurgitatorMockLoader {
@@ -42,6 +43,8 @@ public class RegurgitatorMockLoader {
      *         The HTTP request method for the response.
      * @param requestURI
      *         The URI for the response.
+     *
+     * @return Optional containing the requested server response if found, else empty.
      */
     public Optional<ServerResponse> getMockFor(ServerRequestMethod requestMethod, String requestURI) {
         return storage.read(new ServerResponseKey(requestMethod, requestURI));
