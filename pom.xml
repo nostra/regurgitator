@@ -35,9 +35,9 @@
         <!-- Must be in synch with the netty included by transitive dependencies -->
         <netty.version>4.0.14.Final</netty.version>
         <xstream.version>1.4.7</xstream.version>
-        <slf4j.version>1.7.7</slf4j.version>
+        <slf4j.version>1.7.10</slf4j.version>
         <logback.version>1.1.2</logback.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
         <littleproxy.version>1.0.0-beta8</littleproxy.version>
 	</properties>
 
