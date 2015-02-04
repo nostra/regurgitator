@@ -17,6 +17,13 @@ public class ServerResponseKeyTest {
     }
 
     @Test
+    public void testCreateKeyFromAdvancedURI() {
+        String mockuri = "http://bed.api.no/api/acpcomposer/v0.1/resolve/http://www.oa.no/Den_siste_l_a_i_Dokkadeltaet_synker__N__skal_den_reddes-5-35-36062.html#reloaded";
+        ServerResponseKey key = new ServerResponseKey(GET, mockuri);
+        Assert.assertEquals("GET/http/bed/api/no/api/acpcomposer/v0/1/resolve/http/www/oa/no/Den/siste/l/a/i/Dokkadeltaet/synker/N/skal/den/reddes/5/35/36062/html/reloaded", key.getPath());
+    }
+
+    @Test
     public void testStrangeCharacters() {
         String mockuri = "http://www.ba.no/?a=%20&&amp;=+";
         ServerResponseKey key = new ServerResponseKey(GET, mockuri);
