@@ -3,12 +3,10 @@ package no.api.regurgitator.storage;
 import com.thoughtworks.xstream.XStream;
 import no.api.regurgitator.storage.header.ServerRequestMethod;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -105,13 +103,13 @@ public class DiskStorage implements ServerResponseStore {
 
     private void saveFile(String path, String content) throws IOException {
         File file = new File(path);
-        FileUtils.writeStringToFile(file, content);
+        FileUtils.writeStringToFile(file, content, "UTF-8");
     }
 
     private Optional<String> loadContentWithKey(ServerResponseKey key) {
         String filePath = createContentFilePath(key);
         try {
-            return Optional.ofNullable(IOUtils.toString(new FileInputStream(new File(filePath))));
+            return Optional.ofNullable(FileUtils.readFileToString(new File(filePath), "UTF-8"));
         } catch (IOException e) {
             log.error("Cannot read [" + filePath + "]", e);
             return Optional.empty();
@@ -124,7 +122,7 @@ public class DiskStorage implements ServerResponseStore {
 
     private Optional<ServerResponseMeta> loadMetaFromFile(File f) {
         try {
-            return Optional.ofNullable((ServerResponseMeta) xstream.fromXML(IOUtils.toString(new FileInputStream(f))));
+            return Optional.ofNullable((ServerResponseMeta) xstream.fromXML(FileUtils.readFileToString(f, "UTF-8")));
         } catch (IOException e) {
             log.error("Could not load meta file", e);
             return Optional.empty();
