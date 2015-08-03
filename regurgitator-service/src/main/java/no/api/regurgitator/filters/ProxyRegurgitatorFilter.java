@@ -35,7 +35,7 @@ public class ProxyRegurgitatorFilter extends HttpFiltersAdapter {
                 new DefaultFullHttpResponse(originalRequest.getProtocolVersion(), HttpResponseStatus.OK);
         ByteBuf content = response.content();
         ServerResponseKey key = createServerResponseKeyFromRequest();
-        final Optional<ServerResponse> serverResponse = storage.read(key);
+        final Optional<ServerResponse> serverResponse = storage.read(key, response.getStatus().code());
         if (!serverResponse.isPresent()) {
             // TODO Need to create something with better headers
             throw new RuntimeException("Ops - have not recorded: " + originalRequest.getUri());

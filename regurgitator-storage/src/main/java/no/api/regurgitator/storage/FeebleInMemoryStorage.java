@@ -11,10 +11,11 @@ import java.util.Optional;
 
 /**
  * Currently a rather feeble class which just stores everything internally based on the keys.
+ *
+ * IMPORTANT: This implementation does not have support for storing more than one response per URI.
  */
 public class FeebleInMemoryStorage implements ServerResponseStore {
 
-    // Just for testing....
     private final Map<ServerResponseKey, String> data = new HashMap<>();
 
     private static final XStream xstream = new XStream();
@@ -35,7 +36,7 @@ public class FeebleInMemoryStorage implements ServerResponseStore {
     }
 
     @Override
-    public Optional<ServerResponse> read(ServerResponseKey key) {
+    public Optional<ServerResponse> read(ServerResponseKey key, int responseStatus) {
         String payload = data.get(key);
         if (payload == null) {
             return Optional.empty();

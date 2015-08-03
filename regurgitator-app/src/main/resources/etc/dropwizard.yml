@@ -4,7 +4,7 @@
 # storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
 
 # For legacy disk storage
-storageManager: no.api.regurgitator.storage.DiskStorage
+storageManager: no.api.regurgitator.storage.MD5DiskStorage
 archivedFolder: /tmp/regurgitator/
 
 proxyPort: 9077

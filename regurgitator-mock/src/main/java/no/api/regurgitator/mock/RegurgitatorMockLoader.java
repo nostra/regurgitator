@@ -43,11 +43,15 @@ public class RegurgitatorMockLoader {
      *         The HTTP request method for the response.
      * @param requestURI
      *         The URI for the response.
+     * @param responseStatus
+     *         The expected response code. Whether more than one response type is supported depends on the
+     *         ServerResponseStore implementation.
      *
      * @return Optional containing the requested server response if found, else empty.
      */
-    public Optional<ServerResponse> getMockFor(ServerRequestMethod requestMethod, String requestURI) {
-        return storage.read(new ServerResponseKey(requestMethod, requestURI));
+    public Optional<ServerResponse> getMockFor(ServerRequestMethod requestMethod, String requestURI,
+                                               int responseStatus) {
+        return storage.read(new ServerResponseKey(requestMethod, requestURI), responseStatus);
     }
 
 }

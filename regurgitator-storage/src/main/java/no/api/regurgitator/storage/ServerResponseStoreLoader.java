@@ -28,7 +28,7 @@ public class ServerResponseStoreLoader {
      */
     public static ServerResponseStore load(String className, String archivedFolder) {
         try {
-            log.info("***Loading ServerResponseStore : " + className);
+            log.info("Loading ServerResponseStore : " + className);
             return (ServerResponseStore) Class.forName(className)
                     .getConstructor(String.class)
                     .newInstance(archivedFolder);
