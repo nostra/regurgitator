@@ -1,6 +1,6 @@
 package no.api.regurgitator.mock;
 
-import no.api.regurgitator.storage.DiskStorage;
+import no.api.regurgitator.storage.MD5DiskStorage;
 import no.api.regurgitator.storage.ServerResponse;
 import no.api.regurgitator.storage.ServerResponseKey;
 import no.api.regurgitator.storage.ServerResponseStore;
@@ -27,13 +27,24 @@ public class RegurgitatorMockLoader {
     private final ServerResponseStore storage;
 
     /**
-     * Mock loader constructor.
+     * Mock loader constructor that will use the MD5DiskStorage implementation for managing mock files.
      *
      * @param folder
      *         The full path to the directory where the Regurgitator files are located. Remember trailing slash.
      */
     public RegurgitatorMockLoader(String folder) {
-        this.storage = new DiskStorage(folder);
+        this.storage = new MD5DiskStorage(folder);
+    }
+
+    /**
+     * Mock loader constructor.
+     *
+     * @param serverResponseStore
+     *         The response store to use for managing mock files.
+     */
+    public RegurgitatorMockLoader(ServerResponseStore serverResponseStore) {
+        this.storage = serverResponseStore;
+
     }
 
     /**
