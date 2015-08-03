@@ -145,15 +145,14 @@ public class DiskStorage implements ServerResponseStore {
         try {
             return Optional.ofNullable((ServerResponseMeta) xstream.fromXML(FileUtils.readFileToString(f, "UTF-8")));
         } catch (IOException e) {
+
             log.error("Could not load meta file", e);
             return Optional.empty();
         }
     }
 
-    private int findResponseFolder(ServerResponseKey key) {
-        String dir = String.format("%s%s", saveDir, createFilePath(key.getRequestMethod(), key.getRequestURI()));
-        File file = new File(dir);
-        if (!file.exists() && !file.isDirectory()) {
+    private int findResponseFolder(File file) {
+        if (!file.exists() || !file.isDirectory()) {
             return -1;
         }
         for (File f : file.listFiles()) {
@@ -166,6 +165,11 @@ public class DiskStorage implements ServerResponseStore {
             }
         }
         return -1;
+    }
+
+    private int findResponseFolder(ServerResponseKey key) {
+        String dir = String.format("%s%s", saveDir, createFilePath(key.getRequestMethod(), key.getRequestURI()));
+        return findResponseFolder(new File(dir));
     }
 
     private String createContentFilePath(ServerResponseKey key, int responseStatus) {
