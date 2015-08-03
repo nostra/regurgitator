@@ -44,7 +44,7 @@ public class MockFriendlyFilePathCreator implements FilePathCreator {
             MessageDigest md = MessageDigest.getInstance("MD5");
 
             byte[] md5hash;
-            md.update(str.getBytes("iso-8859-1"), 0, str.length());
+            md.update(str.getBytes("UTF-8"), 0, str.length());
             md5hash = md.digest();
 
             StringBuilder buf = new StringBuilder();
