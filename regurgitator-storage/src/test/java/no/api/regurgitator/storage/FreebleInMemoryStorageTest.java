@@ -38,17 +38,14 @@ public class FreebleInMemoryStorageTest extends ServerResponseStoreTestCase {
     @Test
     public void getKeysTest() {
         ServerResponseStore store = ServerResponseStoreLoader.load(getStorageManager(), null);
-
         ServerResponseMeta meta1 = new ServerResponseMeta(200, ServerRequestMethod.GET, "http://www.oa.no",
                                                           new Headers(new HashMap<>()));
         ServerResponse s1 = new ServerResponse("oa", meta1);
         store.store(s1);
-
         ServerResponseMeta meta2 = new ServerResponseMeta(200, ServerRequestMethod.GET, "http://www.ba.no",
                                                           new Headers(new HashMap<>()));
         ServerResponse s2 = new ServerResponse("ba", meta2);
         store.store(s2);
-
         List<ServerResponseKey> keys = store.getKeys();
         Assert.assertNotNull(keys);
         Assert.assertEquals(2, keys.size());

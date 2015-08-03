@@ -29,9 +29,10 @@ public class ReadResource {
     @Path("{method}/{uri}")
     public String read(@Context HttpServletRequest req,
                        @PathParam("method") String method,
-                       @PathParam("uri") String uri) {
+                       @PathParam("uri") String uri,
+                       @PathParam("status") int status) {
         Optional<ServerResponse> page = storage.read(new ServerResponseKey(
-                findRequestMethodFromString(method), uri));
+                findRequestMethodFromString(method), uri), status);
         if (!page.isPresent()) {
             return "Error: Could not find element with method=" + method + " and uri=" + uri;
         }

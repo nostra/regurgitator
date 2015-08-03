@@ -24,14 +24,14 @@ public class RegurgitatorMockLoaderTest {
     @Test
     public void testValidResponse() {
         Optional<ServerResponse> response = mockLoader.getMockFor(GET,
-                                                                  "http://www.rb.no");
+                                                                  "http://www.rb.no", 300);
         Assert.assertTrue(response.isPresent());
         Assert.assertTrue(response.get().getContent().contains("apiHeaderMultifix"));
     }
 
     @Test
     public void testNonExistingResponse() {
-        Optional<ServerResponse> response = mockLoader.getMockFor(GET, "http://www.oa.no");
+        Optional<ServerResponse> response = mockLoader.getMockFor(GET, "http://www.oa.no", 200);
         Assert.assertFalse(response.isPresent());
     }
 

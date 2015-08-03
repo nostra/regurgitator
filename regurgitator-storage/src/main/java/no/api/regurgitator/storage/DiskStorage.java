@@ -1,6 +1,8 @@
 package no.api.regurgitator.storage;
 
 import com.thoughtworks.xstream.XStream;
+import no.api.regurgitator.storage.filepath.FilePathCreator;
+import no.api.regurgitator.storage.filepath.StandardFilePathCreator;
 import no.api.regurgitator.storage.header.ServerRequestMethod;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -29,6 +31,8 @@ public class DiskStorage implements ServerResponseStore {
     public static final String CONTENT_TXT = "content.txt";
 
     private String saveDir = "Save/";
+
+    private FilePathCreator filePathCreator = new StandardFilePathCreator();
 
     public DiskStorage(String archivedFolder) {
         if (!archivedFolder.isEmpty()) {
@@ -59,14 +63,16 @@ public class DiskStorage implements ServerResponseStore {
             log.error("Could not store data for {}", key);
             return Optional.empty();
         }
-
     }
 
+    /**
+     * The method will first look for a response with the requested response status code. If not found it will return
+     * the first response it finds, if any.
+     */
     @Override
-    public Optional<ServerResponse> read(ServerResponseKey key) {
-
-        Optional<String> content = loadContentWithKey(key);
-        Optional<ServerResponseMeta> meta = loadMetaWithKey(key);
+    public Optional<ServerResponse> read(ServerResponseKey key, int responseStatus) {
+        Optional<String> content = loadContentWithKey(key, responseStatus);
+        Optional<ServerResponseMeta> meta = loadMetaWithKey(key, responseStatus);
         if (content.isPresent() && meta.isPresent()) {
             return Optional.of(new ServerResponse(content.get(), meta.get()));
         } else {
@@ -92,8 +98,8 @@ public class DiskStorage implements ServerResponseStore {
 
     private boolean saveResponse(ServerResponseKey key, ServerResponse response) {
         try {
-            saveFile(createContentFilePath(key), response.getContent());
-            saveFile(createMetaFilePath(key), xstream.toXML(response.getMeta()));
+            saveFile(createContentFilePath(key, response.getMeta().getStatus()), response.getContent());
+            saveFile(createMetaFilePath(key, response.getMeta().getStatus()), xstream.toXML(response.getMeta()));
             return true;
         } catch (IOException e) {
             log.error("Could not store files for [" + key + "] ", e);
@@ -106,18 +112,33 @@ public class DiskStorage implements ServerResponseStore {
         FileUtils.writeStringToFile(file, content, "UTF-8");
     }
 
-    private Optional<String> loadContentWithKey(ServerResponseKey key) {
-        String filePath = createContentFilePath(key);
+    private Optional<String> loadContentWithKey(ServerResponseKey key, int responseStatus) {
+        String filePath = createContentFilePath(key, responseStatus);
         try {
             return Optional.ofNullable(FileUtils.readFileToString(new File(filePath), "UTF-8"));
         } catch (IOException e) {
+            int status = findResponseFolder(key);
+            if (status != -1) {
+                return loadContentWithKey(key, status);
+            }
             log.error("Cannot read [" + filePath + "]", e);
             return Optional.empty();
         }
     }
 
-    private Optional<ServerResponseMeta> loadMetaWithKey(ServerResponseKey key) {
-        return loadMetaFromFile(new File(createMetaFilePath(key)));
+    private Optional<ServerResponseMeta> loadMetaWithKey(ServerResponseKey key, int responseStatus) {
+        String filePath = createMetaFilePath(key, responseStatus);
+        try {
+            return Optional.ofNullable(
+                    (ServerResponseMeta) xstream.fromXML(FileUtils.readFileToString(new File(filePath), "UTF-8")));
+        } catch (IOException e) {
+            int status = findResponseFolder(key);
+            if (status != -1) {
+                return loadMetaWithKey(key, status);
+            }
+            log.error("Could not load meta file", e);
+            return Optional.empty();
+        }
     }
 
     private Optional<ServerResponseMeta> loadMetaFromFile(File f) {
@@ -129,12 +150,34 @@ public class DiskStorage implements ServerResponseStore {
         }
     }
 
-    private String createContentFilePath(ServerResponseKey key) {
-        return String.format("%s%s/%s", saveDir, key.getPath(), CONTENT_TXT);
+    private int findResponseFolder(ServerResponseKey key) {
+        String dir = String.format("%s%s", saveDir, createFilePath(key.getRequestMethod(), key.getRequestURI()));
+        File file = new File(dir);
+        if (!file.exists() && !file.isDirectory()) {
+            return -1;
+        }
+        for (File f : file.listFiles()) {
+            if (f.isDirectory()) {
+                try {
+                    return Integer.parseInt(f.getName());
+                } catch (NumberFormatException e) {
+                    log.error("Not a number {} ", e.getMessage());
+                }
+            }
+        }
+        return -1;
     }
 
-    private String createMetaFilePath(ServerResponseKey key) {
-        return String.format("%s%s/%s", saveDir, key.getPath(), META_XML);
+    private String createContentFilePath(ServerResponseKey key, int responseStatus) {
+        return String
+                .format("%s%s/%s/%s", saveDir, createFilePath(key.getRequestMethod(), key.getRequestURI()),
+                        responseStatus, CONTENT_TXT);
+    }
+
+    private String createMetaFilePath(ServerResponseKey key, int responseStatus) {
+        return String
+                .format("%s%s/%s/%s", saveDir, createFilePath(key.getRequestMethod(), key.getRequestURI()),
+                        responseStatus, META_XML);
     }
 
     private List<ServerResponseKey> listAllTargetFile() {
@@ -170,6 +213,14 @@ public class DiskStorage implements ServerResponseStore {
     private boolean isValidServerResponse(ServerResponse sr) {
         return !(sr == null || sr.getContent() == null || sr.getMeta() == null ||
                 sr.getMeta().getMethod() == null || sr.getMeta().getUri() == null);
+    }
+
+    public FilePathCreator filePathCreator() {
+        return filePathCreator;
+    }
+
+    private String createFilePath(ServerRequestMethod requestMethod, String requestURI) {
+        return filePathCreator().createFilePath(requestMethod, requestURI);
     }
 
 

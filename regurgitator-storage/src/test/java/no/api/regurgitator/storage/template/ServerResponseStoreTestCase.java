@@ -141,7 +141,7 @@ abstract public class ServerResponseStoreTestCase {
     @Test
     public void testShortURLSave() {
         storage.store(mockShortKeyResponse);
-        Optional<ServerResponse> read = storage.read(mockShortKey);
+        Optional<ServerResponse> read = storage.read(mockShortKey, 200);
         Assert.assertTrue(read.isPresent());
         Assert.assertEquals(mockShortKeyResponse.getContent(), read.get().getContent());
 
@@ -152,7 +152,7 @@ abstract public class ServerResponseStoreTestCase {
     public void testLongURLSave() {
         if (!getSkipLongTest()) {
             storage.store(mockLongKeyResponse);
-            Optional<ServerResponse> read = storage.read(mockLongKey);
+            Optional<ServerResponse> read = storage.read(mockLongKey, 200);
             Assert.assertTrue(read.isPresent());
             Assert.assertEquals(mockLongKeyResponse.getContent(), read.get().getContent());
         }
@@ -161,7 +161,7 @@ abstract public class ServerResponseStoreTestCase {
     @Test
     public void testStrangeURLSave() {
         storage.store(mockStrangeKeyResponse);
-        Optional<ServerResponse> read = storage.read(mockStrangeKey);
+        Optional<ServerResponse> read = storage.read(mockStrangeKey, 200);
         Assert.assertTrue(read.isPresent());
         Assert.assertEquals(mockStrangeKeyResponse.getContent(), read.get().getContent());
     }
@@ -169,7 +169,7 @@ abstract public class ServerResponseStoreTestCase {
     @Test
     public void testEmptyPageRequest() {
         // test not saved page
-        assertFalse(storage.read(mockEmptyKey).isPresent());
+        assertFalse(storage.read(mockEmptyKey, 200).isPresent());
     }
 
 

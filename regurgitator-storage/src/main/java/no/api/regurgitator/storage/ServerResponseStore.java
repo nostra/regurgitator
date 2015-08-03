@@ -24,10 +24,12 @@ public interface ServerResponseStore {
      *
      * @param key
      *         The key representing the response wanted.
+     * @param responseStatus
+     *         The expected status for the response.
      *
      * @return Stored server response, or empty
      */
-    Optional<ServerResponse> read(ServerResponseKey key);
+    Optional<ServerResponse> read(ServerResponseKey key, int responseStatus);
 
     /**
      * Get a list of keys for all the responses in the store.
