@@ -10,28 +10,6 @@ import static no.api.regurgitator.storage.header.ServerRequestMethod.GET;
 public class ServerResponseKeyTest {
 
     @Test
-    public void testCreateKey() {
-        String mockuri = "http://relax.v3.api.no/relax-1.6/polldata/41/7441831";
-        ServerResponseKey key = new ServerResponseKey(GET, mockuri);
-        Assert.assertEquals("GET/http/relax/v3/api/no/relax/1/6/polldata/41/7441831", key.getPath());
-    }
-
-    @Test
-    public void testCreateKeyFromAdvancedURI() {
-        String mockuri = "http://bed.api.no/api/acpcomposer/v0.1/resolve/http://www.oa.no/Den_siste_l_a_i_Dokkadeltaet_synker__N__skal_den_reddes-5-35-36062.html#reloaded";
-        ServerResponseKey key = new ServerResponseKey(GET, mockuri);
-        Assert.assertEquals("GET/http/bed/api/no/api/acpcomposer/v0/1/resolve/http/www/oa/no/Den/siste/l/a/i/Dokkadeltaet/synker/N/skal/den/reddes/5/35/36062/html/reloaded", key.getPath());
-    }
-
-    @Test
-    public void testStrangeCharacters() {
-        String mockuri = "http://www.ba.no/?a=%20&&amp;=+";
-        ServerResponseKey key = new ServerResponseKey(GET, mockuri);
-        Assert.assertEquals("GET/http/www/ba/no/a/20/amp", key.getPath());
-        Assert.assertEquals(GET, key.getRequestMethod());
-    }
-
-    @Test
     public void testEquals() {
         String mockuri = "http://www.db.no";
         ServerResponseKey key = new ServerResponseKey(GET, mockuri);

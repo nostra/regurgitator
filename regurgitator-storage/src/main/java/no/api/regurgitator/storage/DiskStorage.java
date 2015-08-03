@@ -1,6 +1,8 @@
 package no.api.regurgitator.storage;
 
 import com.thoughtworks.xstream.XStream;
+import no.api.regurgitator.storage.filepath.FilePathCreator;
+import no.api.regurgitator.storage.filepath.StandardFilePathCreator;
 import no.api.regurgitator.storage.header.ServerRequestMethod;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -29,6 +31,8 @@ public class DiskStorage implements ServerResponseStore {
     public static final String CONTENT_TXT = "content.txt";
 
     private String saveDir = "Save/";
+
+    private FilePathCreator filePathCreator = new StandardFilePathCreator();
 
     public DiskStorage(String archivedFolder) {
         if (!archivedFolder.isEmpty()) {
@@ -130,11 +134,15 @@ public class DiskStorage implements ServerResponseStore {
     }
 
     private String createContentFilePath(ServerResponseKey key) {
-        return String.format("%s%s/%s", saveDir, key.getPath(), CONTENT_TXT);
+        return String
+                .format("%s%s/%s", saveDir, createFilePath(key.getRequestMethod(), key.getRequestURI()),
+                        CONTENT_TXT);
     }
 
     private String createMetaFilePath(ServerResponseKey key) {
-        return String.format("%s%s/%s", saveDir, key.getPath(), META_XML);
+        return String
+                .format("%s%s/%s", saveDir, createFilePath(key.getRequestMethod(), key.getRequestURI()),
+                        META_XML);
     }
 
     private List<ServerResponseKey> listAllTargetFile() {
@@ -170,6 +178,14 @@ public class DiskStorage implements ServerResponseStore {
     private boolean isValidServerResponse(ServerResponse sr) {
         return !(sr == null || sr.getContent() == null || sr.getMeta() == null ||
                 sr.getMeta().getMethod() == null || sr.getMeta().getUri() == null);
+    }
+
+    public FilePathCreator filePathCreator() {
+        return filePathCreator;
+    }
+
+    private String createFilePath(ServerRequestMethod requestMethod, String requestURI) {
+        return filePathCreator().createFilePath(requestMethod, requestURI);
     }
 
 

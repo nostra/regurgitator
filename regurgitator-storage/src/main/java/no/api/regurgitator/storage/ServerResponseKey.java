@@ -1,10 +1,6 @@
 package no.api.regurgitator.storage;
 
 import no.api.regurgitator.storage.header.ServerRequestMethod;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A key object representing a HTTP response, where the request method and uri makes a unique key.
@@ -17,8 +13,6 @@ public final class ServerResponseKey implements Comparable<ServerResponseKey> {
 
     private final String requestURI;
 
-    private final String keyPath;
-
     /**
      * Constructor
      *
@@ -30,10 +24,8 @@ public final class ServerResponseKey implements Comparable<ServerResponseKey> {
     public ServerResponseKey(ServerRequestMethod requestMethod, String requestURI) {
         assert requestMethod != null;
         assert requestURI != null;
-
         this.requestMethod = requestMethod;
         this.requestURI = requestURI;
-        this.keyPath = createFilePath(requestMethod, requestURI);
     }
 
     public ServerRequestMethod getRequestMethod() {
@@ -42,16 +34,6 @@ public final class ServerResponseKey implements Comparable<ServerResponseKey> {
 
     public String getRequestURI() {
         return requestURI;
-    }
-
-    /**
-     * Return the key converted to a path for use by {@link no.api.regurgitator.storage.ServerResponseStore}
-     * implementations.
-     *
-     * @return A string representation of the path that should be used for storing a response on disk.
-     */
-    public String getPath() {
-        return this.keyPath;
     }
 
     @Override
@@ -92,38 +74,9 @@ public final class ServerResponseKey implements Comparable<ServerResponseKey> {
         return "ResponseKey{" +
                 "requestMethod='" + requestMethod + '\'' +
                 ", requestURI='" + requestURI + '\'' +
-                ", keyPath='" + keyPath + '\'' +
                 '}';
     }
 
-    private String createFilePath(ServerRequestMethod requestMethod, String requestURI) {
-        List<String> pathList = new ArrayList<>();
-        pathList.add(requestMethod.toString());
-        for (String eachPaths : StringUtils.split(this.customReplaceString(requestURI, '_'), "_")) {
-            pathList.add(convertLinuxName(eachPaths));
-        }
-        return makePathFile(pathList);
-    }
-
-    private String customReplaceString(String target, char replace) {
-        StringBuilder tempString = new StringBuilder();
-        for (char singleChar : target.toCharArray()) {
-            if (Character.isAlphabetic(singleChar) || Character.isDigit(singleChar)) {
-                tempString.append(singleChar);
-            } else {
-                tempString.append(replace);
-            }
-        }
-        return tempString.toString();
-    }
-
-    private String convertLinuxName(String s) {
-        return StringUtils.isEmpty(s) ? "null" : s;
-    }
-
-    private String makePathFile(List<String> pathFile) {
-        return StringUtils.join(pathFile, "/");
-    }
 
     public static ServerResponseKey fromServerResponse(ServerResponse response) {
         return new ServerResponseKey(response.getMeta().getMethod(), response.getMeta().getUri());
