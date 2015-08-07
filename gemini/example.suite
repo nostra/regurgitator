@@ -1,0 +1,11 @@
+var gemini = require('gemini');
+
+gemini.suite('front', function(suite) {
+  suite
+        .setUrl('/index.html')
+        .setCaptureElements('#content')
+        .before(function(actions, find) {
+            this.allcontent = find('#middle');
+        })
+        .capture('front');    
+});

@@ -1,0 +1,7 @@
+rootUrl: http://localhost:8500
+gridUrl: http://localhost:4444/wd/hub
+browsers:
+  chrome:
+    browserName: chrome
+  firefox
+    browserName: firefox
