@@ -1,4 +1,4 @@
-# http://dropwizard.github.io/dropwizard/manual/configuration.html
+# http://www.dropwizard.io/manual/configuration.html
 
 # For memory storage
 # storageManager: no.api.regurgitator.storage.FeebleInMemoryStorage
