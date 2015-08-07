@@ -16,16 +16,6 @@ public class MockFriendlyFilePathCreator implements FilePathCreator {
 
     private static final Logger log = LoggerFactory.getLogger(MockFriendlyFilePathCreator.class);
 
-    private static MessageDigest md = null;
-
-    static {
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            log.error("Could not create MessageDigest");
-        }
-    }
-
     @Override
     public String createFilePath(ServerRequestMethod requestMethod, String requestURI) {
         List<String> pathList = new ArrayList<>();
