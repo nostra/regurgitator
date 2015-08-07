@@ -3,6 +3,9 @@
 <head>
     <title>Index page</title>
     <link rel="stylesheet" href="css/ex.css" media="screen" type="text/css">
+    <!-- HTML basis taken from
+         http://samples.galenframework.com/tutorial1/tutorial1.html
+     -->
 </head>
 <body>
 <div id="header">
@@ -20,7 +23,11 @@
     <div id="content-container">
         <div id="content-box">
             <div id="content">
-                Content
+                <ul>
+                <#list content as c>
+                <li>${c}</li>
+                </#list>
+                </ul>
             </div>
         </div>
     </div>
