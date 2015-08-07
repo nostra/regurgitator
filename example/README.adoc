@@ -1,0 +1,10 @@
+# Regurgitator usage example
+
+Start with:
+
+```
+mvn clean install
+java -jar target/usage-example-0.0.1-SNAPSHOT.jar
+```
+
+For more details, see https://github.com/amedia/regurgitator/wiki
