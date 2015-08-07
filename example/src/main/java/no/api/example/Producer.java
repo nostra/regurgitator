@@ -23,20 +23,16 @@ public class Producer {
     private void doMojo( ) {
         port(8501);
 
-        // matches "GET /hello/foo" and "GET /hello/bar"
-        // request.params(":name") is 'foo' or 'bar'
-        get("/hello/:name", (request, response) -> {
-            return "Hello: " + request.params(":name");
-        });
+        get("/hello/:name", (request, response) -> "Hello: " + request.params(":name"));
 
         get("/hello",(request, response) -> {
             response.redirect("/hello/");
             return null;
         });
 
-        get("/hello/", (request, response) -> {
-            return "Hello World! Path: " + request.pathInfo();
-        });
+        get("/hello/", (request, response) -> "Hello World! Path: " + request.pathInfo());
+
+        get("/random/", (request, response) -> "Random percentage number: "+(int)(Math.random() * 100));
 
     }
 }

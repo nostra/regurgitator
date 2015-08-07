@@ -41,6 +41,7 @@ public class Consumer {
 
             list.add(read("hello"));
             list.add(read("hello/consumer"));
+            list.add(read("random/"));
 
             attributes.put("content", list);
 
