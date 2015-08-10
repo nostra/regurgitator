@@ -66,18 +66,23 @@ public class WireTest {
         RegurgitatorMockLoader mockLoader = new RegurgitatorMockLoader("src/test/resources/mock");
         ServerResponse mock = mockLoader.getMockFor(ServerRequestMethod.GET, "http://localhost:8501/hello/",
                 200).orElse(null);
-        stubFor(RegurgitatorWireMock.buildFromRegurgitator(mock));
 
-        String str =
-                new BufferedReader(
-                    new InputStreamReader(
-                        new URL("http://localhost:" + WIREMOCK_PORT + "/hello/").openStream()))
-                .lines().reduce("", String::concat);
+        stubFor(RegurgitatorWireMock.regurgitatorStub(mock));
+
+        String str = urlContents(new URL("http://localhost:" + WIREMOCK_PORT + "/hello/"));
         Assert.assertTrue(str.contains("hello"));
 
         //Thread.sleep(10000L);
         // Just verifying that the expected method was called:
         verify(getRequestedFor(urlEqualTo("/hello/")));
+    }
+
+    private String urlContents(URL url ) throws IOException {
+        try ( BufferedReader br =
+                      new BufferedReader( new InputStreamReader( url.openStream())) ) {
+
+            return br.lines().reduce("", String::concat);
+        }
     }
 
 }

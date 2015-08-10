@@ -17,11 +17,10 @@ import java.net.URISyntaxException;
  */
 public class RegurgitatorWireMock {
 
-    public static MappingBuilder buildFromRegurgitator(ServerResponse mock) throws URISyntaxException {
+    public static MappingBuilder regurgitatorStub(ServerResponse mock) throws URISyntaxException {
         RequestMethod requestMethod = resolveMethodFrom( mock.getMeta() );
 
-        UrlMatchingStrategy urlMatchingStrategy;
-        urlMatchingStrategy = WireMock.urlEqualTo(new URI( mock.getMeta().getUri()).getPath());
+        UrlMatchingStrategy urlMatchingStrategy = WireMock.urlEqualTo(new URI( mock.getMeta().getUri()).getPath());
 
         final ResponseDefinitionBuilder aResponse = WireMock.aResponse();
 
@@ -34,7 +33,7 @@ public class RegurgitatorWireMock {
         return new MappingBuilder(requestMethod, urlMatchingStrategy )
                 .willReturn(aResponse
                     .withStatus(mock.getMeta().getStatus())
-                .withBody(mock.getContent()));
+                        .withBody(mock.getContent()));
     }
 
     private static RequestMethod resolveMethodFrom(ServerResponseMeta meta) {
