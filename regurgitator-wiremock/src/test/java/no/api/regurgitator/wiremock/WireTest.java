@@ -1,17 +1,38 @@
 package no.api.regurgitator.wiremock;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import no.api.regurgitator.mock.RegurgitatorMockLoader;
+import no.api.regurgitator.storage.ServerResponse;
+import no.api.regurgitator.storage.header.ServerRequestMethod;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
-import javax.xml.transform.Result;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Optional;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.matching;
+import static com.github.tomakehurst.wiremock.client.WireMock.notMatching;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 public class WireTest {
+
+    private static final int WIREMOCK_PORT = 8089;
+
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089); // No-args constructor defaults to port 8080
+    public WireMockRule wireMockRule = new WireMockRule(WIREMOCK_PORT); // No-args constructor defaults to port 8080
 
     @Test
     @Ignore
@@ -30,6 +51,33 @@ public class WireTest {
         verify(postRequestedFor(urlMatching("/my/resource/[a-z0-9]+"))
                 .withRequestBody(matching(".*<message>1234</message>.*"))
                 .withHeader("Content-Type", notMatching("application/json")));
+    }
+
+    @Test
+    public void fromExample() {
+        RegurgitatorMockLoader mockLoader = new RegurgitatorMockLoader("src/test/resources/mock");
+        Optional<ServerResponse> mock = mockLoader.getMockFor(ServerRequestMethod.GET, "http://localhost:8501/hello/", 200);
+        Assert.assertTrue(mock.isPresent());
+        Assert.assertNotNull(mock.get().getContent());
+    }
+
+    @Test
+    public void useRegurgitatorWithWiremock() throws IOException, URISyntaxException, InterruptedException {
+        RegurgitatorMockLoader mockLoader = new RegurgitatorMockLoader("src/test/resources/mock");
+        ServerResponse mock = mockLoader.getMockFor(ServerRequestMethod.GET, "http://localhost:8501/hello/",
+                200).orElse(null);
+        stubFor(RegurgitatorWireMock.buildFromRegurgitator(mock));
+
+        String str =
+                new BufferedReader(
+                    new InputStreamReader(
+                        new URL("http://localhost:" + WIREMOCK_PORT + "/hello/").openStream()))
+                .lines().reduce("", String::concat);
+        Assert.assertTrue(str.contains("hello"));
+
+        //Thread.sleep(10000L);
+        // Just verifying that the expected method was called:
+        verify(getRequestedFor(urlEqualTo("/hello/")));
     }
 
 }

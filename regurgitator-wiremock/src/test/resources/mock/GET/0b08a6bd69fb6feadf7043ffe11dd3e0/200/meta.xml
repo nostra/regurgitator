@@ -1,0 +1,39 @@
+<no.api.regurgitator.storage.ServerResponseMeta>
+  <status>200</status>
+  <uri>http://localhost:8501/hello/consumer</uri>
+  <method>GET</method>
+  <headers>
+    <headers>
+      <entry>
+        <string>Server</string>
+        <list>
+          <string>Jetty(9.0.z-SNAPSHOT)</string>
+        </list>
+      </entry>
+      <entry>
+        <string>Content-Length</string>
+        <list>
+          <string>15</string>
+        </list>
+      </entry>
+      <entry>
+        <string>Date</string>
+        <list>
+          <string>Mon, 10 Aug 2015 08:13:12 GMT</string>
+        </list>
+      </entry>
+      <entry>
+        <string>Content-Type</string>
+        <list>
+          <string>text/html; charset=UTF-8</string>
+        </list>
+      </entry>
+      <entry>
+        <string>Via</string>
+        <list>
+          <string>1.1.nada</string>
+        </list>
+      </entry>
+    </headers>
+  </headers>
+</no.api.regurgitator.storage.ServerResponseMeta>
