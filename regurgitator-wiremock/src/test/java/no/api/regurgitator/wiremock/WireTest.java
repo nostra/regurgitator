@@ -34,6 +34,10 @@ public class WireTest {
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(WIREMOCK_PORT); // No-args constructor defaults to port 8080
 
+    /**
+     * This test is taken from the wiremock doc, and is just retained as an
+     * example.
+     */
     @Test
     @Ignore
     public void exampleTest() throws InterruptedException {
