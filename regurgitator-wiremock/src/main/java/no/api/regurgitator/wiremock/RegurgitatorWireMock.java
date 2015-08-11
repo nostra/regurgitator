@@ -17,10 +17,23 @@ import java.net.URISyntaxException;
  */
 public class RegurgitatorWireMock {
 
-    public static MappingBuilder regurgitatorStub(ServerResponse mock) throws URISyntaxException {
+    /**
+     * To be invoked similarly to this:
+     * <code>WireMock.stubFor(RegurgitatorWireMock.regurgitatorStub(mock));</code>
+     *
+     * This alleviates the need for mocking the content as such in wiremock, and
+     * you can concentrate on getting the headers right.
+     */
+    public static MappingBuilder regurgitatorStub(ServerResponse mock) {
         RequestMethod requestMethod = resolveMethodFrom( mock.getMeta() );
 
-        UrlMatchingStrategy urlMatchingStrategy = WireMock.urlEqualTo(new URI( mock.getMeta().getUri()).getPath());
+        UrlMatchingStrategy urlMatchingStrategy = null;
+        try {
+            urlMatchingStrategy = WireMock.urlEqualTo(new URI(mock.getMeta().getUri()).getPath());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Not expecting previously saved mock to contain error in URI. " +
+                    "But it did... Contents:"+mock.getMeta().getUri());
+        }
 
         final ResponseDefinitionBuilder aResponse = WireMock.aResponse();
 
@@ -28,7 +41,6 @@ public class RegurgitatorWireMock {
         headers.getHeaderNames()
                 .stream()
                 .forEach(k -> aResponse.withHeader(k, headers.getHeaderValue(k)));
-
 
         return new MappingBuilder(requestMethod, urlMatchingStrategy )
                 .willReturn(aResponse
