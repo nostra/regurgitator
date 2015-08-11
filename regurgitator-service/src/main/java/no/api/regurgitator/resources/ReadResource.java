@@ -19,7 +19,7 @@ import static no.api.regurgitator.storage.header.ServerRequestMethod.findRequest
 @Path("/read/")
 public class ReadResource {
 
-    private ServerResponseStore storage;
+    private final ServerResponseStore storage;
 
     public ReadResource(ServerResponseStore storage) {
         this.storage = storage;
