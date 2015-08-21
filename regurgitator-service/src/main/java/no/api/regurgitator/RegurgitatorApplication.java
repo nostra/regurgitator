@@ -5,6 +5,7 @@ import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import no.api.regurgitator.exception.RegurgitatorException;
 import no.api.regurgitator.health.AlwaysGood;
 import no.api.regurgitator.resources.IndexResource;
 import no.api.regurgitator.resources.ReadResource;
@@ -25,9 +26,11 @@ public class RegurgitatorApplication extends Application<RegurgitatorConfigurati
 
     @Override
     public void run(RegurgitatorConfiguration configuration, Environment environment) {
-        // TODO storage might be null. Should probably add a null check on this.
         final ServerResponseStore storage =
                 ServerResponseStoreLoader.load(configuration.getStorageManager(), configuration.getArchivedFolder());
+        if (storage == null) {
+            throw new RegurgitatorException("Could not create storage. Please check your configuration.");
+        }
         environment.healthChecks().register("dummy", new AlwaysGood());
         environment.jersey().register(
                 new IndexResource(storage, configuration.getRecordOnStart()).startProxy(configuration.getProxyPort()));

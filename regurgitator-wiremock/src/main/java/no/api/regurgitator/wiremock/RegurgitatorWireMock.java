@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.client.UrlMatchingStrategy;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.http.RequestMethod;
+import no.api.regurgitator.exception.RegurgitatorException;
 import no.api.regurgitator.storage.ServerResponse;
 import no.api.regurgitator.storage.ServerResponseMeta;
 import no.api.regurgitator.storage.header.Headers;
@@ -31,7 +32,7 @@ public class RegurgitatorWireMock {
         try {
             urlMatchingStrategy = WireMock.urlEqualTo(new URI(mock.getMeta().getUri()).getPath());
         } catch (URISyntaxException e) {
-            throw new RuntimeException("Not expecting previously saved mock to contain error in URI. " +
+            throw new RegurgitatorException("Not expecting previously saved mock to contain error in URI. " +
                     "But it did... Contents:"+mock.getMeta().getUri());
         }
 
@@ -65,7 +66,7 @@ public class RegurgitatorWireMock {
             case TRACE:
                 return RequestMethod.TRACE;
             default:
-                throw new RuntimeException("Unexpected: "+meta.toString());
+                throw new RegurgitatorException("Unexpected: "+meta.toString());
         }
 
     }

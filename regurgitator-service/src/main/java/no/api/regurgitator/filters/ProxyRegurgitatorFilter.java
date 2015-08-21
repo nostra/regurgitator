@@ -7,6 +7,7 @@ import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import no.api.regurgitator.exception.RegurgitatorException;
 import no.api.regurgitator.storage.ServerResponse;
 import no.api.regurgitator.storage.ServerResponseKey;
 import no.api.regurgitator.storage.ServerResponseStore;
@@ -38,7 +39,7 @@ public class ProxyRegurgitatorFilter extends HttpFiltersAdapter {
         final Optional<ServerResponse> serverResponse = storage.read(key, response.getStatus().code());
         if (!serverResponse.isPresent()) {
             // TODO Need to create something with better headers
-            throw new RuntimeException("Ops - have not recorded: " + originalRequest.getUri());
+            throw new RegurgitatorException("Ops - have not recorded: " + originalRequest.getUri());
         }
         final ServerResponse replacement = serverResponse.get();
         boolean locationHeaderSeen = false;
