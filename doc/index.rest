@@ -1,0 +1,144 @@
+The regurgitator
+================
+
+Set up a proxy recorder in order to later spool off data. Useful for
+integration tests, and looking into your communication.
+
+This application has been made in order to be able to create a static
+data source for setting up tests with gemini:
+https://github.com/bem/gemini
+
+The source code is based on
+
+* http://www.dropwizard.io/
+* https://github.com/adamfisk/LittleProxy
+
+For desired changes, please make a **pull request**.
+
+Also see
+--------
+
+.. toctree::
+
+  tutorial
+
+Running the proxy
+^^^^^^^^^^^^^^^^^
+
+You need Java-8 and Maven 3.x. Check out, compile with maven and run::
+
+   mvn clean install
+   rm -f rm *-service/target/original*
+   java -jar *-service/target/*-service-*-SNAPSHOT.jar server *-app/src/main/resources/etc/*.yml
+
+The strange path to the dropwizard.yml file is due to amedia deployment defaults.
+The configuration is a standard dropwizard configuration. You probably want adjust the
+path to the log files.
+
+Configuration which is specific for the regurgitator is:
+
+============== =======================================================================
+storageManager  Class name of something which implements ServerResponseStore
+                Defaults to feeble in-memory storage.
+recordOnStart   If is true, Regurgitator will start in a recording mode, saving and
+                caching content from each request. Otherwise, will start in listening
+                mode, serving the saved content for each request if previously cached.
+proxyPort       Which port the proxy listens
+============== =======================================================================
+
+Notice that you at the time of writing has a storage choice of file storage and
+in-memory storage.
+
+Testing the proxy
+^^^^^^^^^^^^^^^^^
+
+Get the index page from somewhere using the proxy::
+
+    GET -p http://localhost:9077 http://www.rb.no/
+    http --proxy=http:http://localhost:9077 http://www.rb.no/
+
+You should be able to open http://localhost:9076/
+and find the request there.
+
+The tools:
+
+* http://search.cpan.org/dist/libwww-perl/
+* http://httpie.org/
+
+You can also change your proxy setting in your favorite browser to
+use the regurgitator as proxy.
+
+Using java-setup
+^^^^^^^^^^^^^^^^
+
+You need to add the following to your java command::
+
+    -Dhttp.proxyHost=localhost  -Dhttp.nonProxyHosts= -Dhttp.proxyPort=9077
+
+This can also be added to your MAVEN_OPTS, if you are running maven::
+
+   export MAVEN_OPTS="-Dhttp.proxyHost=localhost -Dhttp.proxyPort=9077 -Dhttp.nonProxyHosts= $MAVEN_OPTS"
+
+Running regurgitator in standalone mode
+---------------------------------------
+
+After building the code do::
+
+    cd regurgitator-app/target
+    unzip -d x *.zip
+    cd x/bin
+    chmod a+x *
+    ./afterInstallation.sh
+
+Then you copy and paste the ``export`` statements, and run either ``./dropwizard.sh run``
+or, if you want to place the process in the background, ``./dropwizard.sh start``
+
+Using Regurgitator for unit tests inside Java projects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This chapter will show you how to use Regurgigator to store HTTP responses, and later use these
+responses inside JUnit tests in your project.
+
+First of all you must configure Regurgitator to use the ``no.api.regurgitator.storage.MD5DiskStorage``
+class in application.yml. Also make to configure the ``archivedFolder`` property.
+
+Start Regurgitator and make sure to run all the requests that you want to be stored for later usage in your tests.
+When done, you should move all the stored files inside the archive folder into the location in your project where you want the files to be stored.
+Eg: ``src/test/resources/mock``.
+
+Now you must add the regurgitator-mock package to your test classpath. If you are using Maven, you should add this dependency::
+
+     <dependency>
+         <groupId>no.api.regurgitator</groupId>
+         <artifactId>regurgitator-mock</artifactId>
+         <version>${regurgitator.version}</version>
+         <scope>test</scope>
+     </dependency>
+
+Replace ${regurgitator.version} with the latest version of Regurgitator. Now, you are ready to read a Regurgitator response into your tests. Since Regurgitator will store responses from all HTTP Methods, you must specify the method
+for the wanted response in addition to the url. Here is an example on how this can be done::
+
+        RegurgitatorMockLoader mockLoader = new RegurgitatorMockLoader("/the/path/to/the/regurgitator/storage/folder");
+        Optional<ServerResponse> mock = mockLoader.getMockFor(ServerRequestMethod.GET, url.toString(), 200);
+        Assert.assertTrue(mock.isPresent());
+        Assert.assertNotNull(mock.get().getContent());
+
+Regurgitator + WireMock
+^^^^^^^^^^^^^^^^^^^^^^^
+
+`WireMock <https://github.com/tomakehurst/wiremock>`_ is a tool for mocking
+HTTP services. You can integrate regurgitator data with it, in order to
+work with realistic data.
+
+You must add the `regurgitator-wiremock` package to your test classpath. Maven
+dependency ::
+
+     <dependency>
+         <groupId>no.api.regurgitator</groupId>
+         <artifactId>regurgitator-wiremock</artifactId>
+         <version>${regurgitator.version}</version>
+         <scope>test</scope>
+     </dependency>
+
+Example of use:
+`https://github.com/amedia/regurgitator/.../wiremock/WireTest.java <https://github.com/amedia/regurgitator/blob/master/regurgitator-wiremock/src/test/java/no/api/regurgitator/wiremock/WireTest.java#L69>`_

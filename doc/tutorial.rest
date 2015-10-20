@@ -1,0 +1,124 @@
+Regurgitator tutorial
+^^^^^^^^^^^^^^^^^^^^^
+
+In this tutorial you will learn how to use regurgitator to
+organize test data for
+`gemini <https://github.com/gemini-testing/gemini/>`_
+use.
+
+The setup is tested under Linux.
+
+The example image shows how a change in the output has been detected with
+gemini:
+
+.. image:: _static/gemini_change.png
+
+Prerequisites
+-------------
+
+* Java-8.x
+* Maven-3.x
+* docker (optional)
+* nodejs / npm (for gemini testing)
+
+Step 1: Get everything running
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There are a number of servers / tools you need to run. Note that in-depth
+explanation of the tools (such as docker and selenium) is out of scope for
+this document.
+
+Selenium in docker or phantomjs
+-------------------------------
+
+You can either just run phantomjs (after having it installed, of course) with::
+
+  phantomjs --webdriver=4444
+
+or you can run selenium in docker (recommended). Run::
+
+  docker run -d -p 4444:4444 --name selenium-hub selenium/hub
+  docker run -d -P --link selenium-hub:hub selenium/node-chrome-debug
+  docker run -d -P --link selenium-hub:hub selenium/node-firefox-debug
+
+Do ``docker ps`` to confirm that the processes you started are running
+
+If you want to see the browser, find the vnc port of one of either chrome or
+firefox with: ``docker port <container-name|container-id> 5900``, and then do:
+``vncviewer 127.0.0.1:<port>`` If asked for password, it is ``secret``
+
+References:
+
+* `<https://github.com/SeleniumHQ/docker-selenium>`_
+* `<https://registry.hub.docker.com/u/selenium/hub/>`_
+
+Start regurgitator in a separate terminal
+-----------------------------------------
+
+You have several options for how to start the regurgitator. Let's assume you have not
+even checked it out yet::
+
+  git clone https://github.com/amedia/regurgitator.git
+  cd regurgitator
+  mvn clean install
+  java -jar *-service/target/r*-service-*-SNAPSHOT.jar server *-app/src/main/resources/etc/*.yml
+
+Go to `<http://localhost:9076/>`_ to verify it is running. I will refer to this as the
+**regurgitator dashboard**.
+
+Start the example data producer
+-------------------------------
+
+Assuming you are in the `regurgitator` source code, start the data producer::
+
+  cd example
+  mvn clean install
+  java -cp target/usage-example-0.0.1-SNAPSHOT.jar:$CLASSPATH no.api.example.Producer
+
+Verify that it it is running by opening `<http://localhost:8501/hello/from_data_producer>`_
+
+And, finally, start the example client
+--------------------------------------
+
+Assuming you are in the `regurgitator/example` source code tree, start the client with::
+
+  java -Dhttp.proxyHost=localhost  -Dhttp.nonProxyHosts= -Dhttp.proxyPort=9077 \
+      -jar target/usage-example-0.0.1-SNAPSHOT.jar
+
+(You compiled the sources in the data producer section.)
+
+Notice the proxy settings. It is
+these that makes the data pass through the regurgitator.
+
+If you open `<http://localhost:8500/index.html>`_, you should see a simplistic web interface.
+If you press the *reload* button in your browser, you observe that the "random percentage number"
+changes.
+
+Open the `regurgitator dashboard <http://localhost:9076/>`_, and press the **record off** button.
+Go back to  `<http://localhost:8500/index.html>`_ and reload the page. You now notice that the
+"random percentage number" **does not change**.
+
+Step 2: Install and run gemini
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Gemini is really best used for tracking changes in layout and CSS configuration.
+Nevertheless, a data change also illustrates how it can be used.
+
+Assuming you have all applications running and you are
+standing in `regurgitator/example` source code tree, you can now do::
+
+  cd gemini
+  npm install gemini
+
+And then gather the screen shots::
+
+  node_modules/.bin/gemini gather example.suite
+
+Test against the gathered data::
+
+  node_modules/.bin/gemini test --reporter html example.suite
+
+Have look at the generated report in ``gemini-report/index.html``. Try to change the
+record setting in the **regurgitator dashboard** and re-run the test.
+
+**Tip:** You want to *gather* the gemini test with the setting **record off**.
