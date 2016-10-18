@@ -51,6 +51,7 @@ public class IndexResource {
 
     public Object startProxy(final int proxyPort) {
         DefaultHttpProxyServer.bootstrap()
+                .withAllowLocalOnly(false)
                 .withPort(proxyPort)
                 .withFiltersSource(createHttpFiltersSourceAdapter())
                 .start();

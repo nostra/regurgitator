@@ -56,6 +56,7 @@ Get the index page from somewhere using the proxy::
 
     GET -p http://localhost:9077 http://www.rb.no/
     http --proxy=http:http://localhost:9077 http://www.rb.no/
+    curl --proxy http://localhost:9077 http://www.rb.no/
 
 You should be able to open http://localhost:9076/
 and find the request there.
